@@ -13,7 +13,7 @@ export default function Template({ children }) {
     if (curtain) {
       // Determine if this is the very first load of the session
       const isInitialLoad = !window.hasLoadedOnce;
-      const staggerDelay = isInitialLoad ? 1.2 : 0.05;
+      const staggerDelay = isInitialLoad ? 2.5 : 0.05;
       
       if (isInitialLoad) {
         window.hasLoadedOnce = true;
