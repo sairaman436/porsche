@@ -12,24 +12,24 @@ if (typeof window !== "undefined") {
 
 // 18 High-Quality Authentic Porsche Images — Unsplash (Verified Porsche IDs)
 const PORSCHE_IMAGES = [
-  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", 
-  "https://images.unsplash.com/photo-1542362567-b05e81e09701?w=800&q=80", 
-  "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800&q=80", 
-  "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80", 
-  "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", 
-  "https://images.unsplash.com/photo-1621932953986-15fcf084da0f?w=800&q=80", 
-  "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80", 
-  "https://images.unsplash.com/photo-1611651338412-81bb06a9ca8c?w=800&q=80", 
-  "https://images.unsplash.com/photo-1611859328053-3cbc9f9399f4?w=800&q=80", 
-  "https://images.unsplash.com/photo-1605515298946-d062f2e9da53?w=800&q=80", 
-  "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80", 
-  "https://images.unsplash.com/photo-1596443686812-2f45229eebc3?w=800&q=80", 
-  "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80", 
-  "https://images.unsplash.com/photo-1502938738936-79c1fc91018c?w=800&q=80", 
-  "https://images.unsplash.com/photo-1566473065135-321fca072123?w=800&q=80", 
-  "https://images.unsplash.com/photo-1619405232049-14a938c6429f?w=800&q=80", 
-  "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80", 
-  "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80"
+  "https://images.unsplash.com/photo-1611651338412-8403fa6e3599?w=800&q=80",
+  "https://images.unsplash.com/photo-1634673970798-a15ae56f6c65?w=800&q=80",
+  "https://images.unsplash.com/photo-1632154939368-1a92207d8af3?w=800&q=80",
+  "https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&q=80",
+  "https://images.unsplash.com/photo-1593353798398-6024b7444bb6?w=800&q=80",
+  "https://images.unsplash.com/photo-1598814165187-ed79437d7490?w=800&q=80",
+  "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80",
+  "https://images.unsplash.com/photo-1613921568536-555645be4032?w=800&q=80",
+  "https://images.unsplash.com/photo-1611651186486-415f04eb78e4?w=800&q=80",
+  "https://images.unsplash.com/photo-1611651336487-802fe164d3e5?w=800&q=80",
+  "https://images.unsplash.com/photo-1615125468484-088e3dfcabb6?w=800&q=80",
+  "https://images.unsplash.com/photo-1576621097105-6b7e62b188e5?w=800&q=80",
+  "https://images.unsplash.com/photo-1597858520171-563a8e8b9925?w=800&q=80",
+  "https://images.unsplash.com/photo-1699325524552-555bd48866b6?w=800&q=80",
+  "https://images.unsplash.com/photo-1722850312872-52ebbd041a90?w=800&q=80",
+  "https://images.unsplash.com/photo-1619844175408-c05947985e2d?w=800&q=80",
+  "https://images.unsplash.com/photo-1722445716692-99fcdf65c541?w=800&q=80",
+  "https://images.unsplash.com/photo-1680530943604-39ea7d8cafd7?w=800&q=80"
 ];
 
 const items = [
