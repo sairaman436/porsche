@@ -58,7 +58,7 @@ export default function GlobalCurtain() {
         </div>
 
         {/* Loading Progress System - Enhanced UI */}
-        <div className="absolute bottom-24 w-full max-w-2xl px-12 z-20 transition-loader-ui">
+        <div className="absolute bottom-24 w-full max-w-2xl px-12 z-[130] transition-loader-ui">
           <div className="flex justify-between items-end mb-4">
             <div className="flex flex-col gap-1">
               <span className="font-mono text-[9px] font-bold uppercase text-white tracking-[0.4em] opacity-40">System_Diagnostic_v4.2.0</span>
@@ -87,7 +87,7 @@ export default function GlobalCurtain() {
         </div>
 
         {/* Diagnostic Logs (Bottom Left) */}
-        <div className="transition-micro absolute bottom-12 left-12 font-sans font-bold text-[9px] tracking-[0.5em] uppercase text-white/40 flex flex-col gap-3">
+        <div className="transition-micro absolute bottom-12 left-12 font-sans font-bold text-[9px] tracking-[0.5em] uppercase text-white/40 flex flex-col gap-3 z-[130]">
           <div className="flex flex-col border-l-2 border-ln-accent pl-6 py-1 gap-1">
             <span className="text-[7px] opacity-50">Subsystem_Alpha</span>
             <span className="text-white">Power_Train: [ONLINE]</span>
