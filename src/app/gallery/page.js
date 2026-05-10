@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -191,15 +190,14 @@ function GalleryCard({ item, onLoad, priority = false }) {
       )}
 
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <Image 
+        {/* Native img bypasses Next.js optimization proxy which times out on large Wikimedia files */}
+        <img 
           src={item.img} 
           alt={item.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className={`object-cover filter grayscale brightness-75 contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out will-change-transform ${loaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 w-full h-full object-cover filter grayscale brightness-75 contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out will-change-transform ${loaded ? 'opacity-100' : 'opacity-0'}`}
           onLoad={handleLoad}
-          priority={priority}
-          loading={priority ? undefined : "lazy"}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-700" />
       </div>
