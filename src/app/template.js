@@ -100,18 +100,18 @@ export default function Template({ children }) {
       // 1. Animate Progress Bar
       gsap.to(".transition-progress-bar", {
         scaleX: 1,
-        duration: 1.8,
+        duration: 0.8,
         ease: "power3.inOut",
-        delay: sequenceDelay + 0.2
+        delay: sequenceDelay
       });
 
       // 2. Animate Percentage
       const percentObj = { value: 0 };
       gsap.to(percentObj, {
         value: 100,
-        duration: 1.8,
+        duration: 0.8,
         ease: "power3.inOut",
-        delay: sequenceDelay + 0.2,
+        delay: sequenceDelay,
         onUpdate: () => {
           const el = document.querySelector(".transition-percent");
           if (el) el.innerText = Math.round(percentObj.value).toString().padStart(2, '0') + "%";
@@ -121,23 +121,23 @@ export default function Template({ children }) {
       // 3. Fade out UI elements
       gsap.to([bgText, micros, ".transition-loader-ui"], { 
         opacity: 0, 
-        duration: 0.4, 
+        duration: 0.3, 
         ease: "power2.in", 
-        delay: sequenceDelay + 2.2 
+        delay: sequenceDelay + 1 
       });
 
       // 4. Slide letters UP
       gsap.to(letters, {
         yPercent: -100,
-        duration: 0.7,
-        stagger: 0.04,
+        duration: 0.5,
+        stagger: 0.03,
         ease: "expo.in",
-        delay: sequenceDelay + 2.2,
+        delay: sequenceDelay + 1,
         onComplete: () => {
           // 5. Final Liquid Reveal
           gsap.to(curtain, {
             yPercent: -100,
-            duration: 1,
+            duration: 0.8,
             ease: "expo.inOut",
           });
         }
