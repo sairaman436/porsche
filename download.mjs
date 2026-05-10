@@ -30,7 +30,7 @@ async function download() {
   for (let i = 0; i < urls.length; i++) {
     const p = path.join(dir, `${i + 1}.jpg`);
     await new Promise((resolve, reject) => {
-      https.get(urls[i], (res) => {
+      https.get(urls[i], { headers: { 'User-Agent': 'PorscheGalleryBot/1.0 (saira@example.com)' } }, (res) => {
         const file = fs.createWriteStream(p);
         res.pipe(file);
         file.on('finish', () => { file.close(); resolve(); });
