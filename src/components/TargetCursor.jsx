@@ -69,7 +69,7 @@ export default function TargetCursor() {
     <>
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none mix-blend-difference"
+        className="fixed top-0 left-0 z-[9999] pointer-events-none"
         style={{ width: 10, height: 10, borderRadius: "50%", background: "#1A1A1A" }}
       />
       <div
