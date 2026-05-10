@@ -60,14 +60,14 @@ export default function TransitionLink({ href, children, className }) {
       });
     }
 
-    // Reset Progress & Percent
+    // Reset Progress & Percent (Hide for subpage navigation)
     const progressBar = document.querySelector(".transition-progress-bar");
     const percentEl = document.querySelector(".transition-percent");
-    if (progressBar) gsap.set(progressBar, { scaleX: 0, backgroundColor: themeColor });
-    if (percentEl) {
-       percentEl.innerText = "00%";
-       percentEl.style.color = "#1A1A1A";
-    }
+    const loaderUI = document.querySelector(".transition-loader-ui");
+
+    if (progressBar) gsap.set(progressBar, { scaleX: 0 });
+    if (percentEl) percentEl.innerText = "";
+    if (loaderUI) gsap.set(loaderUI, { opacity: 0 });
 
     // Set Bubble Colors
     const bubbles = document.querySelectorAll(".transition-bubble");
@@ -107,8 +107,8 @@ export default function TransitionLink({ href, children, className }) {
       delay: sequenceDelay
     });
 
-    // 2. Animate Letters & Text Color (Now Simultaneous)
-    gsap.to([letters, micros, loaderUI.querySelectorAll("span")], { 
+    // 2. Animate Letters & Text Color
+    gsap.to([letters, micros], { 
       color: "#FFFFFF", 
       duration: 0.4, 
       delay: sequenceDelay + 0.3 
@@ -119,27 +119,9 @@ export default function TransitionLink({ href, children, className }) {
       duration: 0.6,
       stagger: 0.03,
       ease: "expo.out",
-      delay: sequenceDelay
-    });
-
-    // 3. Animate Progress
-    gsap.to(progressBar, { 
-      scaleX: 1, 
-      duration: 1, 
-      ease: "power3.inOut", 
-      delay: sequenceDelay 
-    });
-    
-    const pObj = { v: 0 };
-    gsap.to(pObj, {
-      v: 100,
-      duration: 1,
-      ease: "power3.inOut",
       delay: sequenceDelay,
-      onUpdate: () => { 
-        if (percentEl) percentEl.innerText = Math.round(pObj.v).toString().padStart(2, '0') + "%"; 
-      },
       onComplete: () => {
+        // Push route immediately
         router.push(href);
       }
     });
