@@ -43,7 +43,7 @@ export default function GlobalCurtain() {
 
       <div id="porsche-transition-logo" className="absolute inset-0 flex flex-col items-center justify-center z-[110]">
         {/* Large Brutalist Background Type */}
-        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[35vw] leading-none whitespace-nowrap opacity-[0.25] text-white pointer-events-none select-none tracking-tighter transition-all duration-700">
+        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[35vw] leading-none whitespace-nowrap opacity-[0.2] text-ln-accent pointer-events-none select-none tracking-tighter transition-all duration-700">
           T-HYBRID
         </div>
         

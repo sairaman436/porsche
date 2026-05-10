@@ -131,7 +131,12 @@ export default function Template({ children }) {
         });
 
         if (bgText) {
-          gsap.to(bgText, { opacity: 0.4, duration: 0.6, delay: bootDelay + 0.6 });
+          gsap.to(bgText, { 
+            opacity: 0.5, 
+            color: "#CCFF00",
+            duration: 0.6, 
+            delay: bootDelay + 0.6 
+          });
         }
 
         // 4. Slide Letters OUT & Reveal (Final Reveal)
