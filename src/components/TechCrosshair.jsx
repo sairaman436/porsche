@@ -17,6 +17,9 @@ export default function TechCrosshair() {
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
+    let lastX = mouseX;
+    let lastY = mouseY;
+    let velocity = 0;
     let frame = 0;
 
     const onMouseMove = (e) => {
@@ -27,10 +30,23 @@ export default function TechCrosshair() {
     const updateTicker = () => {
       frame++;
       
-      // Update Graph Points
+      // Calculate Velocity
+      const dx = mouseX - lastX;
+      const dy = mouseY - lastY;
+      const instantVelocity = Math.sqrt(dx * dx + dy * dy);
+      
+      // Smooth the velocity for cleaner graph lines
+      velocity += (instantVelocity - velocity) * 0.1;
+      
+      lastX = mouseX;
+      lastY = mouseY;
+      
+      // Update Graph Points based on Velocity
       if (frame % 2 === 0) {
         setPoints(prev => {
-          const newPoint = (Math.sin(frame * 0.2) * 10) + (Math.random() * 5);
+          // Base wave + velocity-driven amplitude + noise
+          const amplitude = Math.min(velocity * 0.5, 15); // Cap amplitude
+          const newPoint = (Math.sin(frame * 0.2) * (2 + amplitude)) + (Math.random() * 2);
           return [...prev, newPoint].slice(-20);
         });
       }
@@ -44,8 +60,13 @@ export default function TechCrosshair() {
       if (coordsRef.current) {
         const xEl = coordsRef.current.querySelector('.x-val');
         const yEl = coordsRef.current.querySelector('.y-val');
+        const velEl = coordsRef.current.querySelector('.vel-val');
+        const ghzEl = coordsRef.current.querySelector('.ghz-val');
+        
         if (xEl) xEl.innerText = Math.round(mouseX);
         if (yEl) yEl.innerText = Math.round(mouseY);
+        if (velEl) velEl.innerText = velocity.toFixed(1);
+        if (ghzEl) ghzEl.innerText = (1.4 + velocity/200).toFixed(2);
       }
     };
 
@@ -122,9 +143,9 @@ export default function TechCrosshair() {
         </div>
         
         <div className="flex justify-between font-mono text-[6px] text-white/30 uppercase mt-1">
-          <span>0.00ms</span>
+          <span><span className="vel-val">0.0</span> px/f</span>
           <span>Buffer: Active</span>
-          <span>1.4Ghz</span>
+          <span><span className="ghz-val">1.40</span> Ghz</span>
         </div>
       </div>
     </div>
