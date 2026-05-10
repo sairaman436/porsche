@@ -74,8 +74,14 @@ export default function TransitionLink({ href, children, className }) {
       gsap.set(bubbleFill, { backgroundColor: themeColor, y: "100%" });
     }
 
-    const destText = document.querySelector("#porsche-transition-logo .destination-text");
-    if (destText) destText.innerText = `DESTINATION ...... ${href.toUpperCase()}`;
+    const micros = document.querySelectorAll("#porsche-transition-logo .transition-micro span");
+    const loaderUI = document.querySelector(".transition-loader-ui");
+
+    // RESET STATES FOR NAVIGATION
+    gsap.set(curtain, { yPercent: 0 });
+    gsap.set([bgText, micros, loaderUI], { opacity: 1 });
+    const letters = document.querySelectorAll(".transition-letter");
+    gsap.set(letters, { yPercent: 100, color: "#1A1A1A" }); // Start hidden & dark
 
     // EXECUTE TRANSITION
     // 0. Bubbles Rise
