@@ -39,7 +39,8 @@ export default function TransitionLink({ href, children, className }) {
     const bgText = document.querySelector("#porsche-transition-logo .transition-bg-text");
     if (bgText) {
       bgText.innerText = word;
-      bgText.style.color = themeColor;
+      // Default to White for high contrast on black curtain, unless it's a specific accented theme
+      bgText.style.color = themeColor === "#1A1A1A" ? "#FFFFFF" : themeColor;
     }
 
     const logoContainer = document.getElementById("porsche-dynamic-word");
@@ -131,7 +132,7 @@ export default function TransitionLink({ href, children, className }) {
     // Watermark visibility
     if (bgText) {
       gsap.to(bgText, {
-        opacity: 0.25,
+        opacity: 0.4,
         duration: 0.8,
         delay: sequenceDelay + 0.4
       });
