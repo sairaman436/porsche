@@ -1,7 +1,7 @@
 "use client";
 
 export default function GlobalCurtain() {
-  const bubbles = Array.from({ length: 15 });
+  const bubbles = Array.from({ length: 10 });
 
   return (
     <div id="porsche-transition-curtain" className="fixed inset-0 z-[100] bg-white pointer-events-none flex items-center justify-center overflow-hidden origin-bottom">
@@ -10,23 +10,26 @@ export default function GlobalCurtain() {
         {bubbles.map((_, i) => (
           <div 
             key={i} 
-            className="transition-bubble absolute bottom-[-150px] bg-ln-dark rounded-full opacity-0"
+            className="transition-bubble absolute bottom-[-150px] bg-ln-dark rounded-full opacity-0 will-change-transform"
             style={{ 
               width: `${Math.random() * 300 + 100}px`, 
               height: `${Math.random() * 300 + 100}px`,
               left: `${Math.random() * 100}%`,
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              WebkitFontSmoothing: "antialiased"
             }}
           />
         ))}
         {/* Fill layer that rises to cover everything */}
-        <div className="transition-bubble-fill absolute bottom-0 left-0 w-full h-full bg-ln-dark translate-y-full" />
+        <div className="transition-bubble-fill absolute bottom-0 left-0 w-full h-full bg-ln-dark translate-y-full will-change-transform" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", WebkitFontSmoothing: "antialiased" }} />
       </div>
 
       {/* SVG Gooey Filter */}
       <svg className="hidden">
         <defs>
           <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
             <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -15" result="goo" />
           </filter>
         </defs>

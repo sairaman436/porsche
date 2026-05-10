@@ -50,8 +50,11 @@ export default function TransitionLink({ href, children, className }) {
         maskWrapper.className = "overflow-hidden inline-flex";
         const letterSpan = document.createElement("span");
         letterSpan.innerText = char;
-        const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[12rem]";
+        const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[10rem]";
         letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none text-ln-dark tracking-tighter inline-block translate-y-full`;
+        letterSpan.style.backfaceVisibility = "hidden";
+        letterSpan.style.WebkitBackfaceVisibility = "hidden";
+        letterSpan.style.webkitFontSmoothing = "antialiased";
         maskWrapper.appendChild(letterSpan);
         logoContainer.appendChild(maskWrapper);
       });
