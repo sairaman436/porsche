@@ -112,8 +112,12 @@ export default function Template({ children }) {
 
         // 3. Slide Letters IN (as liquid covers them)
         const microSpans = document.querySelectorAll(".transition-micro span");
+        
+        // Dynamic Text Color: Neon Green on Dark, Black on Light/Themed
+        const targetTextColor = themeColor === "#1A1A1A" ? "#CCFF00" : "#000000";
+
         gsap.to([letters, microSpans, ".transition-percent"], {
-          color: "#FFFFFF",
+          color: targetTextColor,
           duration: 0.4,
           delay: bootDelay + 0.6
         });

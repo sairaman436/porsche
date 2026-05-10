@@ -109,9 +109,12 @@ export default function TransitionLink({ href, children, className }) {
     // 2. Technical Typography & Diagnostics
     const microSpans = document.querySelectorAll(".transition-micro span");
     
+    // Dynamic Text Color: Neon Green on Dark, Black on Light/Themed
+    const targetTextColor = themeColor === "#1A1A1A" ? "#CCFF00" : "#000000";
+
     // High-Visibility shift
     gsap.to([letters, microSpans], { 
-      color: "#FFFFFF", 
+      color: targetTextColor, 
       duration: 0.2, 
       delay: sequenceDelay + 0.4 
     });
