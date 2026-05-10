@@ -102,7 +102,7 @@ export default function TechCrosshair() {
       {/* Coords & Live Graph Label */}
       <div 
         ref={coordsRef}
-        className="absolute flex flex-col gap-2 p-3 bg-ln-dark/95 backdrop-blur-md border border-white/10 shadow-2xl z-20"
+        className="absolute top-0 left-0 flex flex-col gap-2 p-3 bg-ln-dark/95 backdrop-blur-md border border-white/10 shadow-2xl z-20"
         style={{ mixBlendMode: 'normal' }}
       >
         <div className="flex justify-between items-center gap-6 border-b border-white/10 pb-2">
@@ -141,16 +141,6 @@ export default function TechCrosshair() {
           <span>1.4Ghz</span>
         </div>
       </div>
-
-      {/* CSS variable sync for the intersection point marker if we wanted it separate, 
-          but usually the crosshair intersection is enough. 
-          I'll add a small circle at the intersection for clarity. */}
-      <style jsx>{`
-        div {
-          --mouse-x: 0px;
-          --mouse-y: 0px;
-        }
-      `}</style>
     </div>
   );
 }
