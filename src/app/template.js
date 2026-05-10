@@ -7,71 +7,79 @@ export default function Template({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Check if the curtain exists from a TransitionLink click
     const curtain = document.getElementById("porsche-transition-curtain");
     const letters = document.querySelectorAll("#porsche-transition-logo .transition-letter");
     const micros = document.querySelectorAll("#porsche-transition-logo .transition-micro span");
     const bgText = document.querySelector("#porsche-transition-logo .transition-bg-text");
 
+    // === THEME COLOR MAP ===
     const getThemeColor = (path) => {
-      if (path.includes("engineering")) return "#CCFF00"; 
-      if (path.includes("gallery")) return "#00F0FF";     
-      if (path.includes("heritage")) return "#D4AF37";    
-      if (path.includes("models")) return "#FF0000";      
-      return "#1A1A1A";                             
+      if (path.includes("engineering")) return "#CCFF00";
+      if (path.includes("gallery")) return "#00F0FF";
+      if (path.includes("heritage")) return "#D4AF37";
+      if (path.includes("models")) return "#FF0000";
+      return "#CCFF00"; // Default: Signature Neon (T-Hybrid identity)
     };
     const themeColor = getThemeColor(pathname);
 
+    // === WORD FROM ROUTE ===
     const getWordFromPath = (path) => {
       if (path === "/" || !path) return "PORSCHE";
       const segments = path.split("/").filter(Boolean);
-      const lastSegment = segments[segments.length - 1];
-      return lastSegment.toUpperCase();
+      return segments[segments.length - 1].toUpperCase();
     };
     const word = getWordFromPath(pathname);
 
     if (curtain) {
-      // 1. Update Content for initial load
+      // 1. Update watermark text & color
       if (bgText) {
         bgText.innerText = word;
-        bgText.style.color = themeColor;
+        bgText.style.color = "#222222"; // Always dark ghost stencil
       }
-      
+
+      // 2. Rebuild letters on first mount only
       const logoContainer = document.getElementById("porsche-dynamic-word");
-      if (logoContainer && !window.hasLoadedOnce) { // Only force update on very first mount
-        logoContainer.innerHTML = ""; 
+      if (logoContainer && !window.hasLoadedOnce) {
+        logoContainer.innerHTML = "";
         word.split("").forEach((char) => {
           const maskWrapper = document.createElement("div");
           maskWrapper.className = "overflow-hidden inline-flex";
           const letterSpan = document.createElement("span");
           letterSpan.innerText = char;
           const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[12rem]";
-          letterSpan.className = "transition-letter font-sans font-black uppercase " + textSize + " leading-none text-ln-dark tracking-tighter inline-block translate-y-0";
+          letterSpan.className = "transition-letter font-sans font-black uppercase " + textSize + " leading-none tracking-tighter inline-block translate-y-0";
+          letterSpan.style.color = "#FFFFFF";
           maskWrapper.appendChild(letterSpan);
           logoContainer.appendChild(maskWrapper);
         });
       }
 
-      // 2. Set initial colors
+      // 3. Set bubble colors to theme
       const bubbles = document.querySelectorAll(".transition-bubble");
       const bubbleFill = document.querySelector(".transition-bubble-fill");
       const progressBar = document.querySelector(".transition-progress-bar");
-      
+
       if (bubbles.length > 0) {
-        gsap.set([bubbles, bubbleFill, progressBar], { backgroundColor: themeColor });
+        gsap.set([bubbles, bubbleFill], { backgroundColor: themeColor });
+        if (progressBar) gsap.set(progressBar, { backgroundColor: themeColor });
       }
 
-      // Determine if this is the very first load of the session
+      // === DETERMINE LOAD TYPE ===
       const isInitialLoad = !window.hasLoadedOnce;
-      
+
       if (isInitialLoad) {
         window.hasLoadedOnce = true;
-        
-        // --- INITIAL BOOT SEQUENCE (Only on first visit) ---
+
+        // =============================================
+        //  INITIAL BOOT SEQUENCE (First visit only)
+        // =============================================
         const bootDelay = 0.2;
 
-        // Start letters hidden but in Sharp Light Grey
-        gsap.set(letters, { yPercent: 100, color: "#D1D1D1", opacity: 1 });
+        // Letters start hidden below, pure white
+        gsap.set(letters, { yPercent: 100, color: "#FFFFFF", opacity: 1 });
+
+        // Watermark starts invisible
+        gsap.set(bgText, { opacity: 0 });
 
         // 1. Bubbles Rise & Fill
         gsap.to(".transition-bubble", {
@@ -90,7 +98,7 @@ export default function Template({ children }) {
           delay: bootDelay
         });
 
-        // 2. Progress & Percentage
+        // 2. Progress Bar & Percentage Counter
         gsap.to(".transition-progress-bar", {
           scaleX: 1,
           duration: 1.2,
@@ -110,18 +118,7 @@ export default function Template({ children }) {
           }
         });
 
-        // 3. Slide Letters IN (as liquid covers them)
-        const microSpans = document.querySelectorAll(".transition-micro span");
-        
-        // Dynamic Text Color: Neon Green on Dark, Black on Light/Themed
-        const targetTextColor = themeColor === "#1A1A1A" ? "#CCFF00" : "#000000";
-
-        gsap.to([letters, microSpans, ".transition-percent"], {
-          color: targetTextColor,
-          duration: 0.4,
-          delay: bootDelay + 0.6
-        });
-
+        // 3. Letters Slide In
         gsap.to(letters, {
           yPercent: 0,
           duration: 0.7,
@@ -130,21 +127,23 @@ export default function Template({ children }) {
           delay: bootDelay + 0.5
         });
 
+        // 4. Watermark Reveals as subtle dark ghost
         if (bgText) {
-          gsap.to(bgText, { 
-            opacity: 0.8, 
-            color: "#1A1A1A",
-            duration: 0.6, 
-            delay: bootDelay + 0.6 
+          gsap.to(bgText, {
+            opacity: 0.6,
+            duration: 0.6,
+            delay: bootDelay + 0.6
           });
         }
 
-        // 4. Slide Letters OUT & Reveal (Final Reveal)
-        gsap.to([bgText, micros, ".transition-loader-ui"], { 
-          opacity: 0, 
-          duration: 0.3, 
-          ease: "power2.in", 
-          delay: bootDelay + 1.8 // Increased delay for better visibility
+        // 5. Final Reveal — Slide everything OUT and lift curtain
+        const microSpans = document.querySelectorAll(".transition-micro span");
+
+        gsap.to([bgText, micros, ".transition-loader-ui"], {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+          delay: bootDelay + 1.8
         });
 
         gsap.to(letters, {
@@ -161,14 +160,16 @@ export default function Template({ children }) {
             });
           }
         });
+
       } else {
-        // --- NAVIGATION REVEAL (Fast Reveal only) ---
-        // No redundant progress animations. Just reveal the new page.
-        gsap.to([bgText, micros, ".transition-loader-ui"], { 
-          opacity: 0, 
-          duration: 0.3, 
-          ease: "power2.in", 
-          delay: 0.1 
+        // =============================================
+        //  NAVIGATION REVEAL (Fast — no progress bar)
+        // =============================================
+        gsap.to([bgText, micros, ".transition-loader-ui"], {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+          delay: 0.1
         });
 
         gsap.to(letters, {
@@ -188,7 +189,7 @@ export default function Template({ children }) {
       }
     }
 
-    // Page content slide up animation
+    // Page content entrance animation
     gsap.fromTo(
       "#page-content-wrapper",
       { y: 60, opacity: 0, filter: "blur(5px)" },
