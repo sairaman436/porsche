@@ -4,7 +4,7 @@ export default function GlobalCurtain() {
   const bubbles = Array.from({ length: 12 });
 
   return (
-    <div id="porsche-transition-curtain" className="fixed inset-0 z-[100] bg-white pointer-events-none flex items-center justify-center overflow-hidden origin-bottom">
+    <div id="porsche-transition-curtain" className="fixed inset-0 z-[9999] bg-white pointer-events-none flex items-center justify-center overflow-hidden origin-bottom">
       {/* Noise Texture Overlay */}
       <div className="absolute inset-0 z-[50] opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
       
@@ -41,16 +41,16 @@ export default function GlobalCurtain() {
         </defs>
       </svg>
 
-      <div id="porsche-transition-logo" className="fixed inset-0 flex flex-col items-center justify-center z-[100]">
+      <div id="porsche-transition-logo" className="relative w-full h-full flex flex-col items-center justify-center z-[110]">
         {/* Large Brutalist Background Type */}
-        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[28vw] leading-none whitespace-nowrap opacity-[0.03] pointer-events-none select-none tracking-tighter transition-all duration-700 z-0">
+        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[28vw] leading-none whitespace-nowrap opacity-[0.03] pointer-events-none select-none tracking-tighter transition-all duration-700">
           T-HYBRID
         </div>
         
-        <div id="porsche-dynamic-word" className="flex gap-0 md:gap-3 relative z-[110]">
+        <div id="porsche-dynamic-word" className="flex gap-0 md:gap-3 relative z-[120]">
           {"PORSCHE".split("").map((char, i) => (
             <div key={i} className="overflow-hidden inline-flex">
-              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[12rem] leading-none text-[#CCFF00] tracking-tighter inline-block translate-y-0 opacity-100" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[12rem] leading-none text-black tracking-tighter inline-block translate-y-0 opacity-100" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
                 {char}
               </span>
             </div>

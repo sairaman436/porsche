@@ -70,8 +70,8 @@ export default function Template({ children }) {
         // --- INITIAL BOOT SEQUENCE (Only on first visit) ---
         const bootDelay = 0.2;
 
-        // Start letters hidden but in their signature color
-        gsap.set(letters, { yPercent: 100, color: "#CCFF00", opacity: 1 });
+        // Start letters hidden but in High-Visibility Black
+        gsap.set(letters, { yPercent: 100, color: "#000000", opacity: 1 });
 
         // 1. Bubbles Rise & Fill
         gsap.to(".transition-bubble", {
