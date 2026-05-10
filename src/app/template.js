@@ -68,6 +68,9 @@ export default function Template({ children }) {
         window.hasLoadedOnce = true;
         
         // --- INITIAL BOOT SEQUENCE (Only on first visit) ---
+        // Simultaneous Execution
+        const bootDelay = 0.2;
+
         // Animate Bubbles Rising
         gsap.to(".transition-bubble", {
           y: "-120vh",
@@ -75,15 +78,15 @@ export default function Template({ children }) {
           duration: 1.2,
           stagger: { amount: 0.6, from: "random" },
           ease: "power3.inOut",
-          delay: 0.3
+          delay: bootDelay
         });
 
         // Fill the screen
         gsap.to(".transition-bubble-fill", {
           y: 0,
-          duration: 0.8,
+          duration: 1,
           ease: "power4.inOut",
-          delay: 0.5
+          delay: bootDelay
         });
 
         // 1. Animate Progress Bar
@@ -91,7 +94,7 @@ export default function Template({ children }) {
           scaleX: 1,
           duration: 1.2,
           ease: "power3.inOut",
-          delay: 0.2
+          delay: bootDelay
         });
 
         // 2. Animate Percentage
@@ -100,19 +103,19 @@ export default function Template({ children }) {
           value: 100,
           duration: 1.2,
           ease: "power3.inOut",
-          delay: 0.2,
+          delay: bootDelay,
           onUpdate: () => {
             const el = document.querySelector(".transition-percent");
             if (el) el.innerText = Math.round(percentObj.value).toString().padStart(2, '0') + "%";
           }
         });
 
-        // 3. Fade out UI and Slide Reveal
+        // 3. Fade out UI and Slide Reveal (After sequence completes)
         gsap.to([bgText, micros, ".transition-loader-ui"], { 
           opacity: 0, 
           duration: 0.3, 
           ease: "power2.in", 
-          delay: 1.5 
+          delay: bootDelay + 1.2
         });
 
         gsap.to(letters, {
@@ -120,11 +123,11 @@ export default function Template({ children }) {
           duration: 0.6,
           stagger: 0.04,
           ease: "expo.in",
-          delay: 1.5,
+          delay: bootDelay + 1.2,
           onComplete: () => {
             gsap.to(curtain, {
               yPercent: -100,
-              duration: 1,
+              duration: 0.8,
               ease: "expo.inOut",
             });
           }

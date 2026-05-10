@@ -86,58 +86,60 @@ export default function TransitionLink({ href, children, className }) {
     const letters = document.querySelectorAll(".transition-letter");
     gsap.set(letters, { yPercent: 100, color: "#1A1A1A" }); // Start hidden & dark
 
-    // EXECUTE TRANSITION (Hyper-Fast Version)
+    // EXECUTE TRANSITION (Simultaneous Version)
+    const sequenceDelay = 0;
+
     // 0. Bubbles Rise
     gsap.to(bubbles, {
       y: "-120vh",
       opacity: 1,
-      duration: 0.8,
+      duration: 1,
       stagger: { amount: 0.4, from: "random" },
-      ease: "power2.inOut"
+      ease: "power2.inOut",
+      delay: sequenceDelay
     });
 
     // 1. Fill Screen
     gsap.to(bubbleFill, {
       y: 0,
-      duration: 0.5,
+      duration: 0.8,
       ease: "power4.inOut",
-      delay: 0.2
+      delay: sequenceDelay
     });
 
-    // 2. Animate Letters & Text Color
+    // 2. Animate Letters & Text Color (Now Simultaneous)
     gsap.to([letters, micros, loaderUI.querySelectorAll("span")], { 
       color: "#FFFFFF", 
-      duration: 0.2, 
-      delay: 0.4 
+      duration: 0.4, 
+      delay: sequenceDelay + 0.3 
     });
 
     gsap.to(letters, {
       yPercent: 0,
-      duration: 0.5,
+      duration: 0.6,
       stagger: 0.03,
       ease: "expo.out",
-      delay: 0.4
+      delay: sequenceDelay
     });
 
     // 3. Animate Progress
     gsap.to(progressBar, { 
       scaleX: 1, 
-      duration: 0.8, 
+      duration: 1, 
       ease: "power3.inOut", 
-      delay: 0.4 
+      delay: sequenceDelay 
     });
     
     const pObj = { v: 0 };
     gsap.to(pObj, {
       v: 100,
-      duration: 0.8,
+      duration: 1,
       ease: "power3.inOut",
-      delay: 0.4,
+      delay: sequenceDelay,
       onUpdate: () => { 
         if (percentEl) percentEl.innerText = Math.round(pObj.v).toString().padStart(2, '0') + "%"; 
       },
       onComplete: () => {
-        // Push route immediately
         router.push(href);
       }
     });
