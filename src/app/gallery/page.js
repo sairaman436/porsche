@@ -11,29 +11,26 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// === OPTIMIZED IMAGE SOURCES ===
-// Using Wikimedia's thumbnail API: /thumb/ + /800px- gives us a fast 800px-wide version
-// This drops each image from ~5MB to ~100KB
-
+// 18 Unique High-Quality Porsche Images from Wikimedia
 const PORSCHE_IMAGES = [
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Porsche_911_991_GT2_RS_at_6_Hours_of_Nuerburgring_WEC_2017.jpg/800px-Porsche_911_991_GT2_RS_at_6_Hours_of_Nuerburgring_WEC_2017.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Porsche_Mission_E%2C_70_Years_Porsche_Sports_Car%2C_Berlin_%281X7A3885%29.jpg/800px-Porsche_Mission_E%2C_70_Years_Porsche_Sports_Car%2C_Berlin_%281X7A3885%29.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/2024_Porsche_911_992_Carrera_GTS_%2824306%29.jpg/800px-2024_Porsche_911_992_Carrera_GTS_%2824306%29.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Porsche_959_Paris_Dakar_%283335774531%29.jpg/800px-Porsche_959_Paris_Dakar_%283335774531%29.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/3rd_placed_Porsche_911_GT1_drivers_Karl_Wendlinger%2C_Yannick_Dalmas_%26_Scott_Goodyear_on_the_podium_at_the_1996_Le_Mans_%2851702542698%29.jpg/800px-3rd_placed_Porsche_911_GT1_drivers_Karl_Wendlinger%2C_Yannick_Dalmas_%26_Scott_Goodyear_on_the_podium_at_the_1996_Le_Mans_%2851702542698%29.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/2016_Porsche_919_Hybrid_Le_Mans.jpg/800px-2016_Porsche_919_Hybrid_Le_Mans.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Stuttgart_Jul_2012_54_%28Porsche_Museum_-_1996_Porsche_Boxster%29.JPG/800px-Stuttgart_Jul_2012_54_%28Porsche_Museum_-_1996_Porsche_Boxster%29.JPG",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Porsche_99X_Electric.jpg/800px-Porsche_99X_Electric.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Porsche_963_LMDh.jpg/800px-Porsche_963_LMDh.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Porsche_356_No._1_Roadster_IMG_0814.jpg/800px-Porsche_356_No._1_Roadster_IMG_0814.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Porsche_901_prototype_at_Pebble_Beach_Concours_2023.jpg/800px-Porsche_901_prototype_at_Pebble_Beach_Concours_2023.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Porsche_911_1974_Turbo_Nr.1_LSideFront_PorscheM_9June2013_%2814989610066%29.jpg/800px-Porsche_911_1974_Turbo_Nr.1_LSideFront_PorscheM_9June2013_%2814989610066%29.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Porsche_Cayenne_S_%28955%29_Washington_DC_Metro_Area%2C_USA.jpg/800px-Porsche_Cayenne_S_%28955%29_Washington_DC_Metro_Area%2C_USA.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/2020_Porsche_911_Turbo_S_Automatic_3.7_Front.jpg/800px-2020_Porsche_911_Turbo_S_Automatic_3.7_Front.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/2020_Porsche_Taycan_Turbo_S_Front.jpg/800px-2020_Porsche_Taycan_Turbo_S_Front.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Porsche_911_Targa_4_GTS_2018_Red.jpg/800px-Porsche_911_Targa_4_GTS_2018_Red.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Porsche_Carrera_GT_-_Front.jpg/800px-Porsche_Carrera_GT_-_Front.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Porsche_918_Spyder_-_IAA_2013.jpg/800px-Porsche_918_Spyder_-_IAA_2013.jpg"
+  "https://upload.wikimedia.org/wikipedia/commons/e/e5/Porsche_911_991_GT2_RS_at_6_Hours_of_Nuerburgring_WEC_2017.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/5/52/Porsche_Mission_E%2C_70_Years_Porsche_Sports_Car%2C_Berlin_%281X7A3885%29.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/8/8c/2024_Porsche_911_992_Carrera_GTS_%2824306%29.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/9/94/Porsche_959_Paris_Dakar_%283335774531%29.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/e/e0/3rd_placed_Porsche_911_GT1_drivers_Karl_Wendlinger%2C_Yannick_Dalmas_%26_Scott_Goodyear_on_the_podium_at_the_1996_Le_Mans_%2851702542698%29.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/a/a4/2016_Porsche_919_Hybrid_Le_Mans.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/b/b9/Stuttgart_Jul_2012_54_%28Porsche_Museum_-_1996_Porsche_Boxster%29.JPG",
+  "https://upload.wikimedia.org/wikipedia/commons/3/37/Porsche_99X_Electric.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/1/16/Porsche_963_LMDh.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/e/ec/Porsche_356_No._1_Roadster_IMG_0814.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/4/4d/Porsche_901_prototype_at_Pebble_Beach_Concours_2023.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/6/67/Porsche_911_1974_Turbo_Nr.1_LSideFront_PorscheM_9June2013_%2814989610066%29.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/3/3f/Porsche_Cayenne_S_%28955%29_Washington_DC_Metro_Area%2C_USA.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/1/1d/2020_Porsche_911_Turbo_S_Automatic_3.7_Front.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/e/e1/2020_Porsche_Taycan_Turbo_S_Front.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/1/1c/Porsche_911_Targa_4_GTS_2018_Red.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/6/65/Porsche_Carrera_GT_-_Front.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/3/30/Porsche_918_Spyder_-_IAA_2013.jpg"
 ];
 
 const items = [
