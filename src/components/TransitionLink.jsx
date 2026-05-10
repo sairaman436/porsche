@@ -98,34 +98,44 @@ export default function TransitionLink({ href, children, className }) {
       y: 0,
       duration: 0.8,
       ease: "power4.inOut",
-      delay: 0.3,
+      delay: 0.3
+    });
+
+    // 2. Animate Letters & Text Color (Overlapped)
+    gsap.to([letters, micros, loaderUI.querySelectorAll("span")], { 
+      color: "#FFFFFF", 
+      duration: 0.3, 
+      delay: 0.6 
+    });
+
+    gsap.to(letters, {
+      yPercent: 0,
+      duration: 0.7,
+      stagger: 0.04,
+      ease: "expo.out",
+      delay: 0.7
+    });
+
+    // 3. Animate Progress
+    gsap.to(progressBar, { 
+      scaleX: 1, 
+      duration: 1.2, 
+      ease: "power3.inOut", 
+      delay: 0.7 
+    });
+    
+    const pObj = { v: 0 };
+    gsap.to(pObj, {
+      v: 100,
+      duration: 1.2,
+      ease: "power3.inOut",
+      delay: 0.7,
+      onUpdate: () => { 
+        if (percentEl) percentEl.innerText = Math.round(pObj.v).toString().padStart(2, '0') + "%"; 
+      },
       onComplete: () => {
-        // Now that screen is covered, update text colors for visibility on dark
-        const letters = document.querySelectorAll(".transition-letter");
-        const uiText = document.querySelectorAll(".transition-loader-ui span, .transition-micro span, .transition-percent");
-        gsap.to([letters, uiText], { color: "#FFFFFF", duration: 0.3 });
-
-        // 2. Animate Letters UP
-        gsap.to(letters, {
-          yPercent: 0,
-          duration: 0.7,
-          stagger: 0.04,
-          ease: "expo.out"
-        });
-
-        // 3. Animate Progress
-        gsap.to(progressBar, { scaleX: 1, duration: 1.5, ease: "power3.inOut" });
-        const pObj = { v: 0 };
-        gsap.to(pObj, {
-          v: 100,
-          duration: 1.5,
-          ease: "power3.inOut",
-          onUpdate: () => { if (percentEl) percentEl.innerText = Math.round(pObj.v).toString().padStart(2, '0') + "%"; },
-          onComplete: () => {
-            // Push route
-            setTimeout(() => router.push(href), 100);
-          }
-        });
+        // Push route
+        setTimeout(() => router.push(href), 100);
       }
     });
   };
