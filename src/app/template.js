@@ -70,8 +70,8 @@ export default function Template({ children }) {
         // --- INITIAL BOOT SEQUENCE (Only on first visit) ---
         const bootDelay = 0.2;
 
-        // Start letters hidden but in Sophisticated Metallic Grey
-        gsap.set(letters, { yPercent: 100, color: "#999999", opacity: 1 });
+        // Start letters hidden but in Sharp Light Grey
+        gsap.set(letters, { yPercent: 100, color: "#D1D1D1", opacity: 1 });
 
         // 1. Bubbles Rise & Fill
         gsap.to(".transition-bubble", {
@@ -132,8 +132,8 @@ export default function Template({ children }) {
 
         if (bgText) {
           gsap.to(bgText, { 
-            opacity: 0.4, 
-            color: "#FFFFFF",
+            opacity: 0.8, 
+            color: "#1A1A1A",
             duration: 0.6, 
             delay: bootDelay + 0.6 
           });

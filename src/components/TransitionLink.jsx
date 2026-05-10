@@ -27,11 +27,11 @@ export default function TransitionLink({ href, children, className }) {
 
     // Dynamic Colors based on route
     const getThemeColor = (path) => {
-      if (path.includes("engineering")) return "#CCFF00"; 
-      if (path.includes("gallery")) return "#00F0FF";     
-      if (path.includes("heritage")) return "#D4AF37";    
-      if (path.includes("models")) return "#FF0000";      
-      return "#1A1A1A";                             
+      if (path.includes("engineering")) return "#CCFF00";
+      if (path.includes("gallery")) return "#00F0FF";
+      if (path.includes("heritage")) return "#D4AF37";
+      if (path.includes("models")) return "#FF0000";
+      return "#1A1A1A";
     };
     const themeColor = getThemeColor(href);
 
@@ -45,7 +45,7 @@ export default function TransitionLink({ href, children, className }) {
 
     const logoContainer = document.getElementById("porsche-dynamic-word");
     if (logoContainer) {
-      logoContainer.innerHTML = ""; 
+      logoContainer.innerHTML = "";
       word.split("").forEach((char) => {
         const maskWrapper = document.createElement("div");
         maskWrapper.className = "overflow-hidden inline-flex";
@@ -53,7 +53,7 @@ export default function TransitionLink({ href, children, className }) {
         letterSpan.innerText = char;
         const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[10rem]";
         letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none tracking-tighter inline-block translate-y-full`;
-        letterSpan.style.color = "#999999"; // Metallic Grey Branding
+        letterSpan.style.color = "#D1D1D1"; // Sharp Light Grey Branding
         letterSpan.style.backfaceVisibility = "hidden";
         letterSpan.style.WebkitBackfaceVisibility = "hidden";
         letterSpan.style.webkitFontSmoothing = "antialiased";
@@ -110,15 +110,15 @@ export default function TransitionLink({ href, children, className }) {
 
     // 2. Technical Typography & Diagnostics
     const microSpans = document.querySelectorAll(".transition-micro span");
-    
+
     // Dynamic Text Color: Neon Green on Dark, Black on Light/Themed
     const targetTextColor = themeColor === "#1A1A1A" ? "#CCFF00" : "#000000";
 
     // High-Visibility shift
-    gsap.to([letters, microSpans], { 
-      color: targetTextColor, 
-      duration: 0.2, 
-      delay: sequenceDelay + 0.4 
+    gsap.to([letters, microSpans], {
+      color: targetTextColor,
+      duration: 0.2,
+      delay: sequenceDelay + 0.4
     });
 
     // Branding Settle
@@ -133,14 +133,15 @@ export default function TransitionLink({ href, children, className }) {
     // Watermark visibility
     if (bgText) {
       gsap.to(bgText, {
-        opacity: 0.4,
+        opacity: 0.8,
+        color: "#1A1A1A",
         duration: 0.8,
         delay: sequenceDelay + 0.4
       });
     }
 
     // Diagnostic Reveal
-    gsap.fromTo(microSpans, 
+    gsap.fromTo(microSpans,
       { x: -10, opacity: 0 },
       { x: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power2.out", delay: sequenceDelay + 0.5 }
     );
