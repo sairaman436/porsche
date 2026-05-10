@@ -106,12 +106,22 @@ export default function TransitionLink({ href, children, className }) {
       delay: sequenceDelay
     });
 
-    // 2. Animate Letters & Text Color
-    gsap.to([letters, micros], { 
+    // 2. Animate Letters & Text Color (High Visibility)
+    const microSpans = document.querySelectorAll(".transition-micro span");
+    gsap.to([letters, microSpans], { 
       color: "#FFFFFF", 
       duration: 0.4, 
       delay: sequenceDelay + 0.3 
     });
+
+    // Make massive background text more visible on the colored screen
+    if (bgText) {
+      gsap.to(bgText, {
+        opacity: 0.15,
+        duration: 0.5,
+        delay: sequenceDelay + 0.3
+      });
+    }
 
     gsap.to(letters, {
       yPercent: 0,
