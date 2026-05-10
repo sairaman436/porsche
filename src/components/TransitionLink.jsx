@@ -52,7 +52,8 @@ export default function TransitionLink({ href, children, className }) {
         const letterSpan = document.createElement("span");
         letterSpan.innerText = char;
         const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[10rem]";
-        letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none text-white tracking-tighter inline-block translate-y-full`;
+        letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none tracking-tighter inline-block translate-y-full`;
+        letterSpan.style.color = "#999999"; // Metallic Grey Branding
         letterSpan.style.backfaceVisibility = "hidden";
         letterSpan.style.WebkitBackfaceVisibility = "hidden";
         letterSpan.style.webkitFontSmoothing = "antialiased";
