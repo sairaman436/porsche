@@ -41,7 +41,7 @@ export default function GlobalCurtain() {
         <div id="porsche-dynamic-word" className="flex gap-0 md:gap-3 relative z-10">
           {"PORSCHE".split("").map((char, i) => (
             <div key={i} className="overflow-hidden inline-flex">
-              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[12rem] leading-none text-white tracking-tighter inline-block translate-y-0">
+              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[12rem] leading-none text-ln-dark tracking-tighter inline-block translate-y-0">
                 {char}
               </span>
             </div>
@@ -52,26 +52,26 @@ export default function GlobalCurtain() {
         <div className="absolute bottom-32 w-full max-w-md px-12 z-20 transition-loader-ui">
           <div className="flex justify-between items-end mb-2">
             <div className="flex flex-col">
-              <span className="font-mono text-[8px] uppercase text-white/40 tracking-[0.3em] mb-1">System_Diagnostic</span>
-              <span className="font-mono text-[10px] font-bold text-white uppercase flex gap-2 items-center">
+              <span className="font-mono text-[8px] uppercase text-ln-dark/40 tracking-[0.3em] mb-1">System_Diagnostic</span>
+              <span className="font-mono text-[10px] font-bold text-ln-dark uppercase flex gap-2 items-center">
                 <span className="w-2 h-2 rounded-full bg-ln-accent animate-pulse" />
                 Active_Link: Established
               </span>
             </div>
             <div className="flex flex-col text-right">
-              <span className="font-mono text-[8px] uppercase text-white/40 tracking-[0.3em] mb-1">Status</span>
-              <span className="transition-percent font-mono text-2xl font-black italic text-white leading-none">00%</span>
+              <span className="font-mono text-[8px] uppercase text-ln-dark/40 tracking-[0.3em] mb-1">Status</span>
+              <span className="transition-percent font-mono text-2xl font-black italic text-ln-dark leading-none">00%</span>
             </div>
           </div>
           
           {/* Progress Bar Container */}
-          <div className="h-[2px] w-full bg-white/10 relative overflow-hidden">
+          <div className="h-[2px] w-full bg-ln-dark/10 relative overflow-hidden">
             <div className="transition-progress-bar absolute top-0 left-0 h-full w-full bg-ln-accent origin-left scale-x-0" />
           </div>
         </div>
 
         {/* Diagnostic Logs (Bottom Left) */}
-        <div className="transition-micro absolute bottom-12 left-12 font-sans font-bold text-[9px] tracking-[0.4em] uppercase text-white/40 flex flex-col gap-2">
+        <div className="transition-micro absolute bottom-12 left-12 font-sans font-bold text-[9px] tracking-[0.4em] uppercase text-ln-dark/40 flex flex-col gap-2">
           <div className="flex items-center gap-4 border-l border-ln-accent/30 pl-4 py-1">
             <span className="w-1 h-1 bg-ln-accent" />
             <span>Power_Train: [ONLINE]</span>

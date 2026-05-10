@@ -1,8 +1,11 @@
 "use client";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
 export default function Template({ children }) {
+  const pathname = usePathname();
+
   useEffect(() => {
     // Check if the curtain exists from a TransitionLink click
     const curtain = document.getElementById("porsche-transition-curtain");
@@ -10,51 +13,79 @@ export default function Template({ children }) {
     const micros = document.querySelectorAll("#porsche-transition-logo .transition-micro span");
     const bgText = document.querySelector("#porsche-transition-logo .transition-bg-text");
 
+    const getThemeColor = (path) => {
+      if (path === "/engineering") return "#CCFF00"; 
+      if (path === "/gallery") return "#00F0FF";     
+      if (path === "/heritage") return "#D4AF37";    
+      if (path === "/models") return "#FF0000";      
+      return "#1A1A1A";                             
+    };
+    const themeColor = getThemeColor(pathname);
+
     if (curtain) {
+      // Set initial colors based on current page
+      const bubbles = document.querySelectorAll(".transition-bubble");
+      const bubbleFill = document.querySelector(".transition-bubble-fill");
+      const progressBar = document.querySelector(".transition-progress-bar");
+      
+      if (bubbles.length > 0) {
+        gsap.set(bubbles, { backgroundColor: themeColor });
+        gsap.set(bubbleFill, { backgroundColor: themeColor });
+        gsap.set(progressBar, { backgroundColor: themeColor });
+        if (bgText) bgText.style.color = themeColor;
+      }
       // Determine if this is the very first load of the session
       const isInitialLoad = !window.hasLoadedOnce;
-      const sequenceDelay = isInitialLoad ? 0.5 : 0.1;
+      const sequenceDelay = isInitialLoad ? 0.3 : 0.05;
       
       if (isInitialLoad) {
         window.hasLoadedOnce = true;
       }
 
-      // 0. Animate Bubbles Rising (Buttermax Style)
+      // 0. Animate Bubbles Rising (Buttermax Style) - Accelerated
       gsap.to(".transition-bubble", {
         y: "-120vh",
         opacity: 1,
-        duration: 1.5,
+        duration: 1.2,
         stagger: {
-          amount: 0.8,
+          amount: 0.6,
           from: "random"
         },
         ease: "power3.inOut",
         delay: sequenceDelay
       });
 
-      // Fill the screen with liquid
+      // Fill the screen with liquid - Accelerated
       gsap.to(".transition-bubble-fill", {
         y: 0,
-        duration: 1.2,
+        duration: 0.8,
         ease: "power4.inOut",
-        delay: sequenceDelay + 0.5
+        delay: sequenceDelay + 0.2
+      });
+
+      // SYNC: Change text color to white as black liquid covers them
+      gsap.to([".transition-letter", ".transition-loader-ui span", ".transition-micro span", ".transition-percent"], {
+        color: "#FFFFFF",
+        duration: 0.4,
+        delay: sequenceDelay + 0.6,
+        ease: "none"
       });
 
       // 1. Animate Progress Bar
       gsap.to(".transition-progress-bar", {
         scaleX: 1,
-        duration: 2.5,
+        duration: 1.8,
         ease: "power3.inOut",
-        delay: sequenceDelay + 0.5
+        delay: sequenceDelay + 0.2
       });
 
       // 2. Animate Percentage
       const percentObj = { value: 0 };
       gsap.to(percentObj, {
         value: 100,
-        duration: 2.5,
+        duration: 1.8,
         ease: "power3.inOut",
-        delay: sequenceDelay + 0.5,
+        delay: sequenceDelay + 0.2,
         onUpdate: () => {
           const el = document.querySelector(".transition-percent");
           if (el) el.innerText = Math.round(percentObj.value).toString().padStart(2, '0') + "%";
@@ -64,23 +95,23 @@ export default function Template({ children }) {
       // 3. Fade out UI elements
       gsap.to([bgText, micros, ".transition-loader-ui"], { 
         opacity: 0, 
-        duration: 0.5, 
+        duration: 0.4, 
         ease: "power2.in", 
-        delay: sequenceDelay + 3 
+        delay: sequenceDelay + 2.2 
       });
 
       // 4. Slide letters UP
       gsap.to(letters, {
         yPercent: -100,
-        duration: 0.8,
-        stagger: 0.05,
+        duration: 0.7,
+        stagger: 0.04,
         ease: "expo.in",
-        delay: sequenceDelay + 3,
+        delay: sequenceDelay + 2.2,
         onComplete: () => {
           // 5. Final Liquid Reveal
           gsap.to(curtain, {
             yPercent: -100,
-            duration: 1.2,
+            duration: 1,
             ease: "expo.inOut",
           });
         }

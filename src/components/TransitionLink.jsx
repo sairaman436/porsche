@@ -25,69 +25,99 @@ export default function TransitionLink({ href, children, className }) {
 
     const word = getWordFromHref(href);
 
-    // Update massive background text
-    const bgText = document.querySelector("#porsche-transition-logo .transition-bg-text");
-    if (bgText) bgText.innerText = word;
+    // Dynamic Colors based on route
+    const getThemeColor = (path) => {
+      if (path === "/engineering") return "#CCFF00"; // Neon Accent
+      if (path === "/gallery") return "#00F0FF";     // Cyber Cyan
+      if (path === "/heritage") return "#D4AF37";    // Gold
+      if (path === "/models") return "#FF0000";      // Porsche Red
+      return "#1A1A1A";                             // Default Dark
+    };
+    const themeColor = getThemeColor(href);
 
-    // Update dynamic foreground masked letters
+    // Update UI elements for the destination
+    const bgText = document.querySelector("#porsche-transition-logo .transition-bg-text");
+    if (bgText) {
+      bgText.innerText = word;
+      bgText.style.color = themeColor;
+    }
+
     const logoContainer = document.getElementById("porsche-dynamic-word");
     if (logoContainer) {
-      logoContainer.innerHTML = ""; // Clear old letters
+      logoContainer.innerHTML = ""; 
       word.split("").forEach((char) => {
         const maskWrapper = document.createElement("div");
         maskWrapper.className = "overflow-hidden inline-flex";
-
         const letterSpan = document.createElement("span");
         letterSpan.innerText = char;
-        // Text scales dynamically with word length
-        const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[10rem]";
-        letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none text-ln-dark tracking-tighter inline-block drop-shadow-xl translate-y-full`;
-        
+        const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[12rem]";
+        letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none text-ln-dark tracking-tighter inline-block translate-y-full`;
         maskWrapper.appendChild(letterSpan);
         logoContainer.appendChild(maskWrapper);
       });
     }
 
-    // Update destination text
+    // Reset Progress & Percent
+    const progressBar = document.querySelector(".transition-progress-bar");
+    const percentEl = document.querySelector(".transition-percent");
+    if (progressBar) gsap.set(progressBar, { scaleX: 0, backgroundColor: themeColor });
+    if (percentEl) {
+       percentEl.innerText = "00%";
+       percentEl.style.color = "#1A1A1A";
+    }
+
+    // Set Bubble Colors
+    const bubbles = document.querySelectorAll(".transition-bubble");
+    const bubbleFill = document.querySelector(".transition-bubble-fill");
+    if (bubbles.length > 0) {
+      gsap.set(bubbles, { backgroundColor: themeColor, y: 0, opacity: 0 });
+      gsap.set(bubbleFill, { backgroundColor: themeColor, y: "100%" });
+    }
+
     const destText = document.querySelector("#porsche-transition-logo .destination-text");
-    if (destText) destText.innerText = `DESTINATION ...... ${href}`;
+    if (destText) destText.innerText = `DESTINATION ...... ${href.toUpperCase()}`;
 
-    const letters = document.querySelectorAll("#porsche-transition-logo .transition-letter");
-    const micros = document.querySelectorAll("#porsche-transition-logo .transition-micro span");
+    // EXECUTE TRANSITION
+    // 0. Bubbles Rise
+    gsap.to(bubbles, {
+      y: "-120vh",
+      opacity: 1,
+      duration: 1.2,
+      stagger: { amount: 0.6, from: "random" },
+      ease: "power3.inOut"
+    });
 
-    // Reset states for entry
-    gsap.set(letters, { yPercent: 100 });
-    gsap.set(micros, { opacity: 0, x: -20 });
-    gsap.set(bgText, { scale: 0.9, opacity: 0 });
-
-    // Animate the curtain UP (Exit current page)
-    gsap.to(curtain, {
-      scaleY: 1,
-      transformOrigin: "bottom",
-      duration: 0.7,
+    // 1. Fill Screen
+    gsap.to(bubbleFill, {
+      y: 0,
+      duration: 0.8,
       ease: "power4.inOut",
+      delay: 0.3,
       onComplete: () => {
-        // Background massive text subtle scale
-        gsap.to(bgText, { scale: 1, opacity: 0.05, duration: 2, ease: "power2.out" });
+        // Now that screen is covered, update text colors for visibility on dark
+        const letters = document.querySelectorAll(".transition-letter");
+        const uiText = document.querySelectorAll(".transition-loader-ui span, .transition-micro span, .transition-percent");
+        gsap.to([letters, uiText], { color: "#FFFFFF", duration: 0.3 });
 
-        // Stagger animate the letters sliding UP out of their masks
+        // 2. Animate Letters UP
         gsap.to(letters, {
           yPercent: 0,
-          duration: 0.6,
+          duration: 0.7,
           stagger: 0.04,
-          ease: "expo.out",
+          ease: "expo.out"
         });
 
-        // Animate microcopy in
-        gsap.to(micros, {
-          opacity: 1,
-          x: 0,
-          duration: 0.4,
-          stagger: 0.1,
-          ease: "power2.out",
+        // 3. Animate Progress
+        gsap.to(progressBar, { scaleX: 1, duration: 1.5, ease: "power3.inOut" });
+        const pObj = { v: 0 };
+        gsap.to(pObj, {
+          v: 100,
+          duration: 1.5,
+          ease: "power3.inOut",
+          onUpdate: () => { if (percentEl) percentEl.innerText = Math.round(pObj.v).toString().padStart(2, '0') + "%"; },
           onComplete: () => {
-            // Push the new route just as the aesthetic settles
-            setTimeout(() => router.push(href), 150);
+            // Push route
+            setTimeout(() => router.push(href), 100);
           }
         });
       }
