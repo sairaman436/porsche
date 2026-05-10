@@ -27,11 +27,11 @@ export default function TransitionLink({ href, children, className }) {
 
     // Dynamic Colors based on route
     const getThemeColor = (path) => {
-      if (path === "/engineering") return "#CCFF00"; // Neon Accent
-      if (path === "/gallery") return "#00F0FF";     // Cyber Cyan
-      if (path === "/heritage") return "#D4AF37";    // Gold
-      if (path === "/models") return "#FF0000";      // Porsche Red
-      return "#1A1A1A";                             // Default Dark
+      if (path.includes("engineering")) return "#CCFF00"; 
+      if (path.includes("gallery")) return "#00F0FF";     
+      if (path.includes("heritage")) return "#D4AF37";    
+      if (path.includes("models")) return "#FF0000";      
+      return "#1A1A1A";                             
     };
     const themeColor = getThemeColor(href);
 

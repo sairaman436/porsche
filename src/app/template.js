@@ -14,25 +14,51 @@ export default function Template({ children }) {
     const bgText = document.querySelector("#porsche-transition-logo .transition-bg-text");
 
     const getThemeColor = (path) => {
-      if (path === "/engineering") return "#CCFF00"; 
-      if (path === "/gallery") return "#00F0FF";     
-      if (path === "/heritage") return "#D4AF37";    
-      if (path === "/models") return "#FF0000";      
+      if (path.includes("engineering")) return "#CCFF00"; 
+      if (path.includes("gallery")) return "#00F0FF";     
+      if (path.includes("heritage")) return "#D4AF37";    
+      if (path.includes("models")) return "#FF0000";      
       return "#1A1A1A";                             
     };
     const themeColor = getThemeColor(pathname);
 
+    const getWordFromPath = (path) => {
+      if (path === "/" || !path) return "PORSCHE";
+      const segments = path.split("/").filter(Boolean);
+      const lastSegment = segments[segments.length - 1];
+      return lastSegment.toUpperCase();
+    };
+    const word = getWordFromPath(pathname);
+
     if (curtain) {
-      // Set initial colors based on current page
+      // 1. Update Content for initial load
+      if (bgText) {
+        bgText.innerText = word;
+        bgText.style.color = themeColor;
+      }
+      
+      const logoContainer = document.getElementById("porsche-dynamic-word");
+      if (logoContainer && !window.hasLoadedOnce) { // Only force update on very first mount
+        logoContainer.innerHTML = ""; 
+        word.split("").forEach((char) => {
+          const maskWrapper = document.createElement("div");
+          maskWrapper.className = "overflow-hidden inline-flex";
+          const letterSpan = document.createElement("span");
+          letterSpan.innerText = char;
+          const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[12rem]";
+          letterSpan.className = "transition-letter font-sans font-black uppercase " + textSize + " leading-none text-ln-dark tracking-tighter inline-block translate-y-0";
+          maskWrapper.appendChild(letterSpan);
+          logoContainer.appendChild(maskWrapper);
+        });
+      }
+
+      // 2. Set initial colors
       const bubbles = document.querySelectorAll(".transition-bubble");
       const bubbleFill = document.querySelector(".transition-bubble-fill");
       const progressBar = document.querySelector(".transition-progress-bar");
       
       if (bubbles.length > 0) {
-        gsap.set(bubbles, { backgroundColor: themeColor });
-        gsap.set(bubbleFill, { backgroundColor: themeColor });
-        gsap.set(progressBar, { backgroundColor: themeColor });
-        if (bgText) bgText.style.color = themeColor;
+        gsap.set([bubbles, bubbleFill, progressBar], { backgroundColor: themeColor });
       }
       // Determine if this is the very first load of the session
       const isInitialLoad = !window.hasLoadedOnce;
