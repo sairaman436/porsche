@@ -13,34 +13,55 @@ export default function Template({ children }) {
     if (curtain) {
       // Determine if this is the very first load of the session
       const isInitialLoad = !window.hasLoadedOnce;
-      const staggerDelay = isInitialLoad ? 2.5 : 0.05;
+      const sequenceDelay = isInitialLoad ? 1 : 0.2;
       
       if (isInitialLoad) {
         window.hasLoadedOnce = true;
       }
 
-      // Fade out background text and microcopy
-      gsap.to([bgText, micros], { 
-        opacity: 0, 
-        duration: 0.3, 
-        ease: "power2.in", 
-        delay: staggerDelay 
+      // 1. Animate Progress Bar
+      gsap.to(".transition-progress-bar", {
+        scaleX: 1,
+        duration: 2,
+        ease: "power3.inOut",
+        delay: sequenceDelay
       });
 
-      // Slide letters UP out of the top of their bounding box mask
+      // 2. Animate Percentage
+      const percentObj = { value: 0 };
+      gsap.to(percentObj, {
+        value: 100,
+        duration: 2,
+        ease: "power3.inOut",
+        delay: sequenceDelay,
+        onUpdate: () => {
+          const el = document.querySelector(".transition-percent");
+          if (el) el.innerText = Math.round(percentObj.value).toString().padStart(2, '0') + "%";
+        }
+      });
+
+      // 3. Fade out background text and UI elements
+      gsap.to([bgText, micros, ".transition-loader-ui"], { 
+        opacity: 0, 
+        duration: 0.5, 
+        ease: "power2.in", 
+        delay: sequenceDelay + 2.2 
+      });
+
+      // 4. Slide letters UP
       gsap.to(letters, {
         yPercent: -100,
-        duration: 0.5,
-        stagger: 0.03,
+        duration: 0.6,
+        stagger: 0.04,
         ease: "expo.in",
-        delay: staggerDelay,
+        delay: sequenceDelay + 2.2,
         onComplete: () => {
-          // Then animate the frosted curtain away
+          // 5. Final Curtain Reveal
           gsap.to(curtain, {
             scaleY: 0,
             transformOrigin: "top",
-            duration: 0.8,
-            ease: "power4.inOut",
+            duration: 1,
+            ease: "expo.inOut",
           });
         }
       });
