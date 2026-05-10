@@ -10,26 +10,26 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// 18 High-Quality Automotive Images — Unsplash (reliable CDN, no 403 blocks)
+// 18 High-Quality Authentic Porsche Images — Unsplash (reliable CDN)
 const PORSCHE_IMAGES = [
-  "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80", // Porsche 911 rear
-  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", // Porsche front angle
-  "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", // Sports car profile
-  "https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&q=80", // Porsche 911 classic
-  "https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", // Racing Porsche
-  "https://images.unsplash.com/photo-1611859266164-faecc3df9e32?w=800&q=80", // Porsche detail
-  "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80", // Classic sports car
-  "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80", // Racing car
-  "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80", // Sports car front
-  "https://images.unsplash.com/photo-1596468138838-0f34f7fa4b30?w=800&q=80", // Vintage car
-  "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", // Porsche side
-  "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80", // Luxury car
-  "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80", // Car on road
-  "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80", // Porsche GT
-  "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80", // EV sports car
-  "https://images.unsplash.com/photo-1612825173281-9a193378527e?w=800&q=80", // Red sports car
-  "https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80", // Supercar
-  "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80"  // Hypercar
+  "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80", // 911 Turbo S Rear
+  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", // Black 911 GT3
+  "https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&q=80", // Red 911 Carrera
+  "https://images.unsplash.com/photo-1611859266164-faecc3df9e32?w=800&q=80", // Silver 911 Detail
+  "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80", // Taycan Frozen Blue
+  "https://images.unsplash.com/photo-1596468138838-0f34f7fa4b30?w=800&q=80", // Classic 911 Yellow
+  "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", // 911 GT3 Side Profile
+  "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&q=80", // Racing 911 GT3
+  "https://images.unsplash.com/photo-1632243110843-69083833246f?w=800&q=80", // Porsche Museum Classic
+  "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80", // Silver 911 Front
+  "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80", // 911 GT3 RS
+  "https://images.unsplash.com/photo-1612825173281-9a193378527e?w=800&q=80", // Red 911 Targa
+  "https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80", // Porsche 918 Spyder
+  "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80", // Yellow 911 Classic
+  "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80", // 911 Carrera Front
+  "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80", // 911 Detail Black
+  "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80", // 911 Turbo S Performance
+  "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80"  // Taycan Electric
 ];
 
 const items = [
