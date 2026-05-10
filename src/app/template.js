@@ -68,10 +68,12 @@ export default function Template({ children }) {
         window.hasLoadedOnce = true;
         
         // --- INITIAL BOOT SEQUENCE (Only on first visit) ---
-        // Simultaneous Execution
         const bootDelay = 0.2;
 
-        // Animate Bubbles Rising
+        // Start letters hidden
+        gsap.set(letters, { yPercent: 100, color: "#1A1A1A" });
+
+        // 1. Bubbles Rise & Fill
         gsap.to(".transition-bubble", {
           y: "-120vh",
           opacity: 1,
@@ -81,7 +83,6 @@ export default function Template({ children }) {
           delay: bootDelay
         });
 
-        // Fill the screen
         gsap.to(".transition-bubble-fill", {
           y: 0,
           duration: 1,
@@ -89,7 +90,7 @@ export default function Template({ children }) {
           delay: bootDelay
         });
 
-        // 1. Animate Progress Bar
+        // 2. Progress & Percentage
         gsap.to(".transition-progress-bar", {
           scaleX: 1,
           duration: 1.2,
@@ -97,7 +98,6 @@ export default function Template({ children }) {
           delay: bootDelay
         });
 
-        // 2. Animate Percentage
         const percentObj = { value: 0 };
         gsap.to(percentObj, {
           value: 100,
@@ -110,37 +110,40 @@ export default function Template({ children }) {
           }
         });
 
-        // SYNC: Change text color to white as black liquid covers them (High Visibility)
+        // 3. Slide Letters IN (as liquid covers them)
         const microSpans = document.querySelectorAll(".transition-micro span");
         gsap.to([letters, microSpans, ".transition-percent"], {
           color: "#FFFFFF",
           duration: 0.4,
-          delay: bootDelay + 0.6,
-          ease: "none"
+          delay: bootDelay + 0.6
+        });
+
+        gsap.to(letters, {
+          yPercent: 0,
+          duration: 0.7,
+          stagger: 0.04,
+          ease: "expo.out",
+          delay: bootDelay + 0.5
         });
 
         if (bgText) {
-          gsap.to(bgText, {
-            opacity: 0.15,
-            duration: 0.6,
-            delay: bootDelay + 0.6
-          });
+          gsap.to(bgText, { opacity: 0.15, duration: 0.6, delay: bootDelay + 0.6 });
         }
 
-        // 3. Fade out UI and Slide Reveal (After sequence completes)
+        // 4. Slide Letters OUT & Reveal (Final Reveal)
         gsap.to([bgText, micros, ".transition-loader-ui"], { 
           opacity: 0, 
           duration: 0.3, 
           ease: "power2.in", 
-          delay: bootDelay + 1.2
+          delay: bootDelay + 1.8 // Increased delay for better visibility
         });
 
         gsap.to(letters, {
           yPercent: -100,
           duration: 0.6,
-          stagger: 0.04,
+          stagger: 0.03,
           ease: "expo.in",
-          delay: bootDelay + 1.2,
+          delay: bootDelay + 1.8,
           onComplete: () => {
             gsap.to(curtain, {
               yPercent: -100,
