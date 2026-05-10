@@ -50,7 +50,7 @@ export default function GlobalCurtain() {
         <div id="porsche-dynamic-word" className="flex gap-0 md:gap-3 relative z-[120]">
           {"PORSCHE".split("").map((char, i) => (
             <div key={i} className="overflow-hidden inline-flex">
-              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[13rem] leading-none text-white tracking-tighter inline-block translate-y-0 opacity-100" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", textShadow: "0 0 50px rgba(204,255,0,0.5)" }}>
+              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[13rem] leading-none text-white tracking-tighter inline-block translate-y-0 opacity-100" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
                 {char}
               </span>
             </div>

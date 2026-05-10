@@ -125,8 +125,7 @@ export default function TransitionLink({ href, children, className }) {
       duration: 0.8,
       stagger: 0.05,
       ease: "expo.out",
-      delay: sequenceDelay + 0.1,
-      textShadow: "0 0 40px rgba(204,255,0,0.6)" // High-Visibility Glow
+      delay: sequenceDelay + 0.1
     });
 
     // Watermark visibility
