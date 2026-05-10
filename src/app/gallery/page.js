@@ -148,21 +148,21 @@ export default function Gallery() {
           {/* Column 1 - Parallax Down */}
           <div ref={col1Ref} className="flex flex-col gap-6 will-change-transform">
             {col1.map((item, idx) => (
-              <GalleryCard key={`c1-${idx}`} item={item} onLoad={handleImageLoad} priority={idx < 2} />
+              <GalleryCard key={`c1-${idx}`} item={item} onLoad={handleImageLoad} priority={idx < 3} />
             ))}
           </div>
 
           {/* Column 2 - Static */}
           <div className="flex flex-col gap-6">
             {col2.map((item, idx) => (
-              <GalleryCard key={`c2-${idx}`} item={item} onLoad={handleImageLoad} priority={idx < 2} />
+              <GalleryCard key={`c2-${idx}`} item={item} onLoad={handleImageLoad} priority={idx < 3} />
             ))}
           </div>
 
           {/* Column 3 - Parallax Up */}
           <div ref={col3Ref} className="flex flex-col gap-6 will-change-transform">
             {col3.map((item, idx) => (
-              <GalleryCard key={`c3-${idx}`} item={item} onLoad={handleImageLoad} priority={idx < 2} />
+              <GalleryCard key={`c3-${idx}`} item={item} onLoad={handleImageLoad} priority={idx < 3} />
             ))}
           </div>
         </div>
@@ -173,8 +173,17 @@ export default function Gallery() {
 
 function GalleryCard({ item, onLoad, priority = false }) {
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef(null);
+
+  // Handle cached images where onLoad might not fire
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete) {
+      handleLoad();
+    }
+  }, []);
 
   const handleLoad = () => {
+    if (loaded) return;
     setLoaded(true);
     if (onLoad) onLoad();
   };
@@ -192,6 +201,7 @@ function GalleryCard({ item, onLoad, priority = false }) {
       <div className="absolute inset-0 z-0 overflow-hidden">
         {/* Native img bypasses Next.js optimization proxy which times out on large Wikimedia files */}
         <img 
+          ref={imgRef}
           src={item.img} 
           alt={item.title}
           className={`absolute inset-0 w-full h-full object-cover filter grayscale brightness-75 contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out will-change-transform ${loaded ? 'opacity-100' : 'opacity-0'}`}
