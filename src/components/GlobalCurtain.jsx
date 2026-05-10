@@ -41,16 +41,16 @@ export default function GlobalCurtain() {
         </defs>
       </svg>
 
-      <div id="porsche-transition-logo" className="relative w-full h-full flex flex-col items-center justify-center z-[60]">
+      <div id="porsche-transition-logo" className="fixed inset-0 flex flex-col items-center justify-center z-[100]">
         {/* Large Brutalist Background Type */}
-        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[28vw] leading-none whitespace-nowrap opacity-[0.03] pointer-events-none select-none tracking-tighter transition-all duration-700">
+        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[28vw] leading-none whitespace-nowrap opacity-[0.03] pointer-events-none select-none tracking-tighter transition-all duration-700 z-0">
           T-HYBRID
         </div>
         
-        <div id="porsche-dynamic-word" className="flex gap-0 md:gap-3 relative z-[60]">
+        <div id="porsche-dynamic-word" className="flex gap-0 md:gap-3 relative z-[110]">
           {"PORSCHE".split("").map((char, i) => (
             <div key={i} className="overflow-hidden inline-flex">
-              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[12rem] leading-none text-[#CCFF00] tracking-tighter inline-block translate-y-0" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[12rem] leading-none text-[#CCFF00] tracking-tighter inline-block translate-y-0 opacity-100" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
                 {char}
               </span>
             </div>
