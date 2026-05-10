@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
 export default function TechCrosshair() {
+  const pathname = usePathname();
   const containerRef = useRef(null);
   const horizontalRef = useRef(null);
   const verticalRef = useRef(null);
@@ -11,6 +13,8 @@ export default function TechCrosshair() {
   const [points, setPoints] = useState([]);
 
   useEffect(() => {
+    if (!pathname.includes("/engineering")) return;
+
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let frame = 0;
@@ -56,7 +60,9 @@ export default function TechCrosshair() {
       window.removeEventListener("scroll", updateTicker);
       gsap.ticker.remove(updateTicker);
     };
-  }, []);
+  }, [pathname]);
+
+  if (!pathname.includes("/engineering")) return null;
 
   return (
     <div ref={containerRef} className="fixed inset-0 pointer-events-none z-[9999] hidden lg:block overflow-hidden">

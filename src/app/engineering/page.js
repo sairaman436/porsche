@@ -6,7 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const ScrollStack = dynamic(() => import("../../components/ScrollStack"), { ssr: false });
 const ScrollReveal = dynamic(() => import("../../components/ScrollReveal"), { ssr: false });
-const TechCrosshair = dynamic(() => import("../../components/TechCrosshair"), { ssr: false });
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -46,7 +45,6 @@ export default function Engineering() {
 
   return (
     <section className="min-h-screen bg-ln-bg relative overflow-hidden cursor-none">
-      <TechCrosshair />
       
       {/* Precision Engineering Grid */}
       <div 
