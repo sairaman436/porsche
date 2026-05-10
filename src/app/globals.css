@@ -27,7 +27,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Removed scroll-behavior: smooth to prevent conflicts with GSAP ScrollTrigger scrub animations */
 }
 
 body {

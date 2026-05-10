@@ -35,7 +35,7 @@ export default function ParallaxFrames({ totalFrames = 2500 }) {
     const imageCache = new Map();
 
     // Preload first batch of frames for instant start
-    for (let i = 1; i <= 100; i++) {
+    for (let i = 1; i <= 300; i++) {
       const img = new Image();
       const paddedIndex = String(i).padStart(5, '0');
       img.src = `/frames/frame_${paddedIndex}.webp`;
