@@ -7,74 +7,59 @@ export default function TechCrosshair() {
   const horizontalRef = useRef(null);
   const verticalRef = useRef(null);
   const coordsRef = useRef(null);
+  const intersectionRef = useRef(null);
   const [points, setPoints] = useState([]);
 
-  const intersectionRef = useRef(null);
-
   useEffect(() => {
-    let mouseX = 0;
-    let mouseY = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
     let frame = 0;
 
     const onMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      
-      gsap.to(horizontalRef.current, {
-        y: mouseY,
-        duration: 0.1,
-        ease: "power2.out"
-      });
-      
-      gsap.to(verticalRef.current, {
-        x: mouseX,
-        duration: 0.1,
-        ease: "power2.out"
-      });
-      
-      gsap.to(intersectionRef.current, {
-        x: mouseX,
-        y: mouseY,
-        duration: 0.1,
-        ease: "power2.out"
-      });
-
-      gsap.to(coordsRef.current, {
-        x: mouseX + 20,
-        y: mouseY + 20,
-        duration: 0.1,
-        ease: "power2.out"
-      });
-
-      if (coordsRef.current) {
-        coordsRef.current.querySelector('.x-val').innerText = mouseX.toFixed(0);
-        coordsRef.current.querySelector('.y-val').innerText = mouseY.toFixed(0);
-      }
     };
 
-    const updateGraph = () => {
+    const updateTicker = () => {
       frame++;
-      if (frame % 2 === 0) { // Update frequency
+      
+      // Update Graph Points
+      if (frame % 2 === 0) {
         setPoints(prev => {
           const newPoint = (Math.sin(frame * 0.2) * 10) + (Math.random() * 5);
-          const next = [...prev, newPoint].slice(-20); // Keep last 20 points
-          return next;
+          return [...prev, newPoint].slice(-20);
         });
       }
-      requestAnimationFrame(updateGraph);
+
+      // Sync positions with high precision using GSAP quickSetter for performance
+      gsap.set(horizontalRef.current, { y: mouseY });
+      gsap.set(verticalRef.current, { x: mouseX });
+      gsap.set(intersectionRef.current, { x: mouseX, y: mouseY });
+      gsap.set(coordsRef.current, { x: mouseX + 25, y: mouseY + 25 });
+
+      if (coordsRef.current) {
+        const xEl = coordsRef.current.querySelector('.x-val');
+        const yEl = coordsRef.current.querySelector('.y-val');
+        if (xEl) xEl.innerText = Math.round(mouseX);
+        if (yEl) yEl.innerText = Math.round(mouseY);
+      }
     };
 
     window.addEventListener("mousemove", onMouseMove);
-    const animId = requestAnimationFrame(updateGraph);
+    // Also listen to scroll to force sync in some browser environments
+    window.addEventListener("scroll", updateTicker, { passive: true });
+    
+    gsap.ticker.add(updateTicker);
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
-      cancelAnimationFrame(animId);
+      window.removeEventListener("scroll", updateTicker);
+      gsap.ticker.remove(updateTicker);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 pointer-events-none z-[9999] hidden lg:block">
+    <div ref={containerRef} className="fixed inset-0 pointer-events-none z-[9999] hidden lg:block overflow-hidden">
       {/* Horizontal Line */}
       <div 
         ref={horizontalRef} 
@@ -91,19 +76,17 @@ export default function TechCrosshair() {
       {/* Target Intersection Point with Radar */}
       <div 
         ref={intersectionRef}
-        className="absolute top-0 left-0 w-8 h-8 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute top-0 left-0 w-8 h-8 -translate-x-1/2 -translate-y-1/2"
       >
         <div className="w-full h-full border border-ln-accent opacity-20 rounded-full animate-ping" />
         <div className="absolute inset-0 border-[0.5px] border-ln-accent opacity-50 rounded-full scale-50" />
-        {/* Rotating Radar Sweep */}
         <div className="absolute inset-0 border-t border-ln-accent rounded-full animate-spin" />
       </div>
 
       {/* Coords & Live Graph Label */}
       <div 
         ref={coordsRef}
-        className="absolute top-0 left-0 flex flex-col gap-2 p-3 bg-ln-dark/95 backdrop-blur-md border border-white/10 shadow-2xl z-20"
-        style={{ mixBlendMode: 'normal' }}
+        className="absolute top-0 left-0 flex flex-col gap-2 p-3 bg-ln-dark/95 backdrop-blur-md border border-white/10 shadow-2xl z-20 min-w-[160px]"
       >
         <div className="flex justify-between items-center gap-6 border-b border-white/10 pb-2">
           <div className="flex flex-col">
@@ -119,7 +102,7 @@ export default function TechCrosshair() {
         </div>
 
         {/* Mini Live Graph */}
-        <div className="w-32 h-10 relative mt-1">
+        <div className="w-full h-10 relative mt-1 overflow-hidden">
           <svg width="100%" height="100%" viewBox="0 0 100 20" preserveAspectRatio="none">
             <path
               d={`M ${points.map((p, i) => `${(i / 19) * 100} ${10 + p}`).join(' L ')}`}
@@ -127,12 +110,9 @@ export default function TechCrosshair() {
               stroke="#CCFF00"
               strokeWidth="1.5"
               strokeLinecap="round"
-              className="transition-all duration-100"
             />
-            {/* Horizontal Baseline */}
             <line x1="0" y1="10" x2="100" y2="10" stroke="white" strokeWidth="0.2" opacity="0.2" />
           </svg>
-          <div className="absolute -right-1 top-0 h-full w-[1px] bg-ln-accent opacity-20" />
         </div>
         
         <div className="flex justify-between font-mono text-[6px] text-white/30 uppercase mt-1">
