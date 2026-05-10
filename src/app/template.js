@@ -110,6 +110,23 @@ export default function Template({ children }) {
           }
         });
 
+        // SYNC: Change text color to white as black liquid covers them (High Visibility)
+        const microSpans = document.querySelectorAll(".transition-micro span");
+        gsap.to([letters, microSpans, ".transition-percent"], {
+          color: "#FFFFFF",
+          duration: 0.4,
+          delay: bootDelay + 0.6,
+          ease: "none"
+        });
+
+        if (bgText) {
+          gsap.to(bgText, {
+            opacity: 0.15,
+            duration: 0.6,
+            delay: bootDelay + 0.6
+          });
+        }
+
         // 3. Fade out UI and Slide Reveal (After sequence completes)
         gsap.to([bgText, micros, ".transition-loader-ui"], { 
           opacity: 0, 
