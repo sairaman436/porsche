@@ -78,11 +78,10 @@ export default function TransitionLink({ href, children, className }) {
     }
 
     const micros = document.querySelectorAll("#porsche-transition-logo .transition-micro span");
-    const loaderUI = document.querySelector(".transition-loader-ui");
 
     // RESET STATES FOR NAVIGATION
     gsap.set(curtain, { yPercent: 0 });
-    gsap.set([bgText, micros, loaderUI], { opacity: 1 });
+    gsap.set([bgText, micros], { opacity: 1 });
     const letters = document.querySelectorAll(".transition-letter");
     gsap.set(letters, { yPercent: 100, color: "#1A1A1A" }); // Start hidden & dark
 
