@@ -85,54 +85,64 @@ export default function TransitionLink({ href, children, className }) {
     const letters = document.querySelectorAll(".transition-letter");
     gsap.set(letters, { yPercent: 100, color: "#1A1A1A" }); // Start hidden & dark
 
-    // EXECUTE TRANSITION (Simultaneous Version)
+    // EXECUTE TRANSITION (Buttermax Reroute)
     const sequenceDelay = 0;
 
-    // 0. Bubbles Rise
+    // 0. Organic Bubbles Rise
     gsap.to(bubbles, {
       y: "-120vh",
       opacity: 1,
-      duration: 1,
-      stagger: { amount: 0.4, from: "random" },
-      ease: "power2.inOut",
+      duration: 1.2,
+      stagger: { amount: 0.5, from: "random" },
+      ease: "expo.inOut",
       delay: sequenceDelay
     });
 
-    // 1. Fill Screen
+    // 1. Organic Liquid Fill (Slightly Offset for Depth)
     gsap.to(bubbleFill, {
       y: 0,
-      duration: 0.8,
-      ease: "power4.inOut",
-      delay: sequenceDelay
+      duration: 0.9,
+      ease: "expo.inOut",
+      delay: sequenceDelay + 0.15
     });
 
-    // 2. Animate Letters & Text Color (High Visibility)
+    // 2. Technical Typography & Diagnostics
     const microSpans = document.querySelectorAll(".transition-micro span");
+    
+    // High-Visibility shift
     gsap.to([letters, microSpans], { 
       color: "#FFFFFF", 
-      duration: 0.4, 
-      delay: sequenceDelay + 0.3 
+      duration: 0.2, 
+      delay: sequenceDelay + 0.4 
     });
 
-    // Make massive background text more visible on the colored screen
+    // Branding Settle
+    gsap.to(letters, {
+      yPercent: 0,
+      duration: 0.8,
+      stagger: 0.05,
+      ease: "expo.out",
+      delay: sequenceDelay + 0.1
+    });
+
+    // Watermark visibility
     if (bgText) {
       gsap.to(bgText, {
         opacity: 0.15,
-        duration: 0.5,
-        delay: sequenceDelay + 0.3
+        duration: 0.8,
+        delay: sequenceDelay + 0.4
       });
     }
 
-    gsap.to(letters, {
-      yPercent: 0,
-      duration: 0.6,
-      stagger: 0.03,
-      ease: "expo.out",
-      delay: sequenceDelay,
-      onComplete: () => {
-        // Push route immediately
-        router.push(href);
-      }
+    // Diagnostic Reveal
+    gsap.fromTo(microSpans, 
+      { x: -10, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power2.out", delay: sequenceDelay + 0.5 }
+    );
+
+    // Navigation trigger (Precise Timing)
+    gsap.delayedCall(sequenceDelay + 1.2, () => {
+      router.push(href);
     });
   };
 
