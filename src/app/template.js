@@ -60,88 +60,100 @@ export default function Template({ children }) {
       if (bubbles.length > 0) {
         gsap.set([bubbles, bubbleFill, progressBar], { backgroundColor: themeColor });
       }
+
       // Determine if this is the very first load of the session
       const isInitialLoad = !window.hasLoadedOnce;
-      const sequenceDelay = isInitialLoad ? 0.3 : 0.05;
       
       if (isInitialLoad) {
         window.hasLoadedOnce = true;
+        
+        // --- INITIAL BOOT SEQUENCE (Only on first visit) ---
+        // Animate Bubbles Rising
+        gsap.to(".transition-bubble", {
+          y: "-120vh",
+          opacity: 1,
+          duration: 1.2,
+          stagger: { amount: 0.6, from: "random" },
+          ease: "power3.inOut",
+          delay: 0.3
+        });
+
+        // Fill the screen
+        gsap.to(".transition-bubble-fill", {
+          y: 0,
+          duration: 0.8,
+          ease: "power4.inOut",
+          delay: 0.5
+        });
+
+        // 1. Animate Progress Bar
+        gsap.to(".transition-progress-bar", {
+          scaleX: 1,
+          duration: 1.2,
+          ease: "power3.inOut",
+          delay: 0.2
+        });
+
+        // 2. Animate Percentage
+        const percentObj = { value: 0 };
+        gsap.to(percentObj, {
+          value: 100,
+          duration: 1.2,
+          ease: "power3.inOut",
+          delay: 0.2,
+          onUpdate: () => {
+            const el = document.querySelector(".transition-percent");
+            if (el) el.innerText = Math.round(percentObj.value).toString().padStart(2, '0') + "%";
+          }
+        });
+
+        // 3. Fade out UI and Slide Reveal
+        gsap.to([bgText, micros, ".transition-loader-ui"], { 
+          opacity: 0, 
+          duration: 0.3, 
+          ease: "power2.in", 
+          delay: 1.5 
+        });
+
+        gsap.to(letters, {
+          yPercent: -100,
+          duration: 0.6,
+          stagger: 0.04,
+          ease: "expo.in",
+          delay: 1.5,
+          onComplete: () => {
+            gsap.to(curtain, {
+              yPercent: -100,
+              duration: 1,
+              ease: "expo.inOut",
+            });
+          }
+        });
+      } else {
+        // --- NAVIGATION REVEAL (Fast Reveal only) ---
+        // No redundant progress animations. Just reveal the new page.
+        gsap.to([bgText, micros, ".transition-loader-ui"], { 
+          opacity: 0, 
+          duration: 0.3, 
+          ease: "power2.in", 
+          delay: 0.1 
+        });
+
+        gsap.to(letters, {
+          yPercent: -100,
+          duration: 0.6,
+          stagger: 0.03,
+          ease: "expo.in",
+          delay: 0.1,
+          onComplete: () => {
+            gsap.to(curtain, {
+              yPercent: -100,
+              duration: 0.8,
+              ease: "expo.inOut",
+            });
+          }
+        });
       }
-
-      // 0. Animate Bubbles Rising (Buttermax Style) - Accelerated
-      gsap.to(".transition-bubble", {
-        y: "-120vh",
-        opacity: 1,
-        duration: 1.2,
-        stagger: {
-          amount: 0.6,
-          from: "random"
-        },
-        ease: "power3.inOut",
-        delay: sequenceDelay
-      });
-
-      // Fill the screen with liquid - Accelerated
-      gsap.to(".transition-bubble-fill", {
-        y: 0,
-        duration: 0.8,
-        ease: "power4.inOut",
-        delay: sequenceDelay + 0.2
-      });
-
-      // SYNC: Change text color to white as black liquid covers them
-      gsap.to([".transition-letter", ".transition-loader-ui span", ".transition-micro span", ".transition-percent"], {
-        color: "#FFFFFF",
-        duration: 0.4,
-        delay: sequenceDelay + 0.6,
-        ease: "none"
-      });
-
-      // 1. Animate Progress Bar
-      gsap.to(".transition-progress-bar", {
-        scaleX: 1,
-        duration: 0.8,
-        ease: "power3.inOut",
-        delay: sequenceDelay
-      });
-
-      // 2. Animate Percentage
-      const percentObj = { value: 0 };
-      gsap.to(percentObj, {
-        value: 100,
-        duration: 0.8,
-        ease: "power3.inOut",
-        delay: sequenceDelay,
-        onUpdate: () => {
-          const el = document.querySelector(".transition-percent");
-          if (el) el.innerText = Math.round(percentObj.value).toString().padStart(2, '0') + "%";
-        }
-      });
-
-      // 3. Fade out UI elements
-      gsap.to([bgText, micros, ".transition-loader-ui"], { 
-        opacity: 0, 
-        duration: 0.3, 
-        ease: "power2.in", 
-        delay: sequenceDelay + 1 
-      });
-
-      // 4. Slide letters UP
-      gsap.to(letters, {
-        yPercent: -100,
-        duration: 0.5,
-        stagger: 0.03,
-        ease: "expo.in",
-        delay: sequenceDelay + 1,
-        onComplete: () => {
-          // 5. Final Liquid Reveal
-          gsap.to(curtain, {
-            yPercent: -100,
-            duration: 0.8,
-            ease: "expo.inOut",
-          });
-        }
-      });
     }
 
     // Page content slide up animation
