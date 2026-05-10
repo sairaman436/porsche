@@ -51,7 +51,7 @@ export default function TransitionLink({ href, children, className }) {
         const letterSpan = document.createElement("span");
         letterSpan.innerText = char;
         const textSize = word.length > 7 ? "text-5xl md:text-8xl" : "text-6xl md:text-[10rem]";
-        letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none text-ln-dark tracking-tighter inline-block translate-y-full`;
+        letterSpan.className = `transition-letter font-sans font-black uppercase ${textSize} leading-none text-white tracking-tighter inline-block translate-y-full`;
         letterSpan.style.backfaceVisibility = "hidden";
         letterSpan.style.WebkitBackfaceVisibility = "hidden";
         letterSpan.style.webkitFontSmoothing = "antialiased";
@@ -125,13 +125,14 @@ export default function TransitionLink({ href, children, className }) {
       duration: 0.8,
       stagger: 0.05,
       ease: "expo.out",
-      delay: sequenceDelay + 0.1
+      delay: sequenceDelay + 0.1,
+      textShadow: "0 0 40px rgba(204,255,0,0.6)" // High-Visibility Glow
     });
 
     // Watermark visibility
     if (bgText) {
       gsap.to(bgText, {
-        opacity: 0.15,
+        opacity: 0.25,
         duration: 0.8,
         delay: sequenceDelay + 0.4
       });

@@ -127,11 +127,12 @@ export default function Template({ children }) {
           duration: 0.7,
           stagger: 0.04,
           ease: "expo.out",
-          delay: bootDelay + 0.5
+          delay: bootDelay + 0.5,
+          textShadow: "0 0 40px rgba(204,255,0,0.6)" // High-Visibility Glow
         });
 
         if (bgText) {
-          gsap.to(bgText, { opacity: 0.15, duration: 0.6, delay: bootDelay + 0.6 });
+          gsap.to(bgText, { opacity: 0.25, duration: 0.6, delay: bootDelay + 0.6 });
         }
 
         // 4. Slide Letters OUT & Reveal (Final Reveal)

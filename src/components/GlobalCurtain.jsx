@@ -43,14 +43,14 @@ export default function GlobalCurtain() {
 
       <div id="porsche-transition-logo" className="relative w-full h-full flex flex-col items-center justify-center z-[110]">
         {/* Large Brutalist Background Type */}
-        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[28vw] leading-none whitespace-nowrap opacity-[0.03] pointer-events-none select-none tracking-tighter transition-all duration-700">
+        <div className="transition-bg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-sans font-black uppercase text-[35vw] leading-none whitespace-nowrap opacity-[0.03] pointer-events-none select-none tracking-tighter transition-all duration-700">
           T-HYBRID
         </div>
         
         <div id="porsche-dynamic-word" className="flex gap-0 md:gap-3 relative z-[120]">
           {"PORSCHE".split("").map((char, i) => (
             <div key={i} className="overflow-hidden inline-flex">
-              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[12rem] leading-none text-white tracking-tighter inline-block translate-y-0 opacity-100" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+              <span className="transition-letter font-sans font-black uppercase text-7xl md:text-[13rem] leading-none text-white tracking-tighter inline-block translate-y-0 opacity-100" style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", textShadow: "0 0 30px rgba(204,255,0,0.3)" }}>
                 {char}
               </span>
             </div>
