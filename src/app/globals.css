@@ -18,6 +18,14 @@
   --border: rgba(0, 0, 0, 0.1);
   --glass-bg: rgba(255, 255, 255, 0.65);
   --glass-blur: 20px;
+
+  /* Consistent naming with Tailwind config */
+  --ln-bg: #F2F2F0;
+  --ln-accent: #CCFF00;
+  --ln-dark: #1A1A1A;
+  --ln-text: #1A1A1A;
+  --ln-muted: #7A7A7A;
+  --ln-border: rgba(0, 0, 0, 0.1);
 }
 
 * {

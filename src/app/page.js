@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 const ParallaxFrames = dynamic(() => import('../components/ParallaxFrames'), { ssr: false });
 const OrbitImages = dynamic(() => import('../components/OrbitImages'), { ssr: false });
 const FlowingMenu = dynamic(() => import('../components/FlowingMenu'), { ssr: false });
+const TextPressure = dynamic(() => import('../components/TextPressure'), { ssr: false });
 
 export default function Home() {
   const orbitItems = [
@@ -79,6 +80,44 @@ export default function Home() {
               <p className="font-sans font-bold text-[10px] tracking-[0.2em] uppercase text-white/50 mt-3">{s.label}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Text Pressure Section */}
+      <section className="relative z-20 bg-ln-dark py-32 overflow-hidden border-y border-white/5">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(var(--ln-accent) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        </div>
+        <div className="h-[400px] w-full flex items-center justify-center px-4 relative z-10">
+          <TextPressure
+            text="PORSCHE"
+            flex={true}
+            alpha={false}
+            stroke={false}
+            width={true}
+            weight={true}
+            italic={true}
+            textColor="var(--ln-accent)"
+            minFontSize={48}
+          />
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="relative z-20 bg-ln-bg py-32 px-8 md:px-16 border-t border-ln-border">
+        <div className="max-w-screen-xl mx-auto text-center">
+          <p className="font-sans font-bold text-[10px] tracking-[0.4em] uppercase text-ln-muted mb-8">Get In Touch</p>
+          <h2 className="font-serif font-black italic text-5xl md:text-8xl uppercase leading-none text-ln-text mb-12">
+            Experience<br />The <span className="text-ln-accent">Unrivaled.</span>
+          </h2>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+            <a href="mailto:contact@porsche.com" className="bg-ln-text text-ln-bg font-sans font-black text-[12px] tracking-[0.2em] uppercase px-12 py-5 hover:scale-105 transition-transform">
+              Send Inquiry
+            </a>
+            <button className="border border-ln-border text-ln-text font-sans font-black text-[12px] tracking-[0.2em] uppercase px-12 py-5 hover:bg-ln-dark hover:text-white transition-all">
+              Locate Dealer
+            </button>
+          </div>
         </div>
       </section>
     </>

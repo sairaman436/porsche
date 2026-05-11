@@ -36,7 +36,7 @@ async function download() {
       fs.writeFileSync(p, buffer);
       console.log(`Downloaded ${i + 1}.jpg (${buffer.length} bytes)`);
     } catch (e) {
-      console.error(`Failed to download ${i+1}.jpg:`, e.message);
+      console.error(`Failed to download ${i + 1}.jpg:`, e.message);
     }
   }
 }
