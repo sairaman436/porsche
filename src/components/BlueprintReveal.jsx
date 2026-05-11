@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function BlueprintReveal({ 
-  baseImage = "/assets/car.png", 
-  revealImage = "/assets/blueprint.png",
-  className = "" 
+  baseImage = "/assets/car_centered.png", 
+  revealImage = "/assets/blueprint_internal.png",
+  className = "",
+  revealOffset = { x: 0, y: 0 },
+  revealScale = 1
 }) {
   const containerRef = useRef(null);
   const [maskPos, setMaskPos] = useState({ x: 50, y: 50 });
@@ -22,7 +24,7 @@ export default function BlueprintReveal({
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full aspect-[21/9] overflow-hidden cursor-none ${className}`}
+      className={`relative w-full aspect-[21/9] overflow-hidden cursor-none bg-ln-dark ${className}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -33,33 +35,48 @@ export default function BlueprintReveal({
         style={{ backgroundImage: `url(${baseImage})` }}
       />
 
-      {/* Reveal Image (Blueprint) */}
+      {/* Blueprint Layer (Internal Components) */}
       <div 
         className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
         style={{ 
           backgroundImage: `url(${revealImage})`,
-          clipPath: isHovered 
-            ? `circle(150px at ${maskPos.x}% ${maskPos.y}%)` 
-            : `circle(0px at 50% 50%)`,
-          WebkitClipPath: isHovered 
-            ? `circle(150px at ${maskPos.x}% ${maskPos.y}%)` 
-            : `circle(0px at 50% 50%)`
+          backgroundPosition: `calc(50% + ${revealOffset.x}px) calc(50% + ${revealOffset.y}px)`,
+          backgroundSize: `${100 * revealScale}%`,
+          filter: 'brightness(1.4) contrast(1.2)',
+          opacity: isHovered ? 1 : 0,
+          maskImage: `radial-gradient(circle 180px at ${maskPos.x}% ${maskPos.y}%, black 20%, transparent 80%)`,
+          WebkitMaskImage: `radial-gradient(circle 180px at ${maskPos.x}% ${maskPos.y}%, black 20%, transparent 80%)`
+        }}
+      />
+
+      {/* Grid Overlay for Blueprint feel */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{ 
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+          backgroundSize: '20px 20px',
+          opacity: isHovered ? 0.2 : 0,
+          maskImage: `radial-gradient(circle 180px at ${maskPos.x}% ${maskPos.y}%, black 20%, transparent 80%)`,
+          WebkitMaskImage: `radial-gradient(circle 180px at ${maskPos.x}% ${maskPos.y}%, black 20%, transparent 80%)`
         }}
       />
 
       {/* Instruction Overlay */}
       <div className={`absolute bottom-8 left-8 transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
-        <p className="text-white/40 font-mono text-[10px] tracking-[0.3em] uppercase">Hover to reveal engineering blueprint</p>
+        <p className="text-white/40 font-mono text-[10px] tracking-[0.3em] uppercase">Move your light to reveal engineering</p>
       </div>
 
-      {/* Spotlight Border (Optional) */}
+      {/* Flashlight Beam / Glow */}
       {isHovered && (
         <div 
-          className="absolute pointer-events-none border border-ln-accent/30 rounded-full w-[300px] h-[300px] -translate-x-1/2 -translate-y-1/2 z-30"
+          className="absolute pointer-events-none z-30 w-[360px] h-[360px] -translate-x-1/2 -translate-y-1/2"
           style={{ 
             left: `${maskPos.x}%`, 
             top: `${maskPos.y}%`,
-            boxShadow: '0 0 50px rgba(204,255,0,0.2)'
+            background: 'radial-gradient(circle, rgba(204,255,0,0.15) 0%, transparent 70%)',
+            border: '1px solid rgba(204,255,0,0.1)',
+            borderRadius: '50%',
+            boxShadow: 'inset 0 0 50px rgba(204,255,0,0.1), 0 0 100px rgba(204,255,0,0.05)'
           }}
         />
       )}

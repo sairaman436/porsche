@@ -9,6 +9,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], style: ["normal", "itali
 
 const TargetCursor = dynamic(() => import("../components/TargetCursor"), { ssr: false });
 const TechCrosshair = dynamic(() => import("../components/TechCrosshair"), { ssr: false });
+const WireframeBackground = dynamic(() => import("../components/WireframeBackground"), { ssr: false });
 export const metadata = {
   title: "Porsche 911 T-Hybrid | The New Standard",
   description: "Experience the next evolution of the iconic 911. Hybrid power meets timeless design.",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.variable} ${playfair.variable} bg-ln-bg text-ln-text cursor-none md:cursor-none`}>
         <TargetCursor />
         <TechCrosshair />
+        <WireframeBackground />
         <GlobalCurtain />
         <div className="organic-bg" />
 

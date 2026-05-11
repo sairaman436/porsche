@@ -51,9 +51,11 @@ export default function Home() {
       {/* Blueprint Reveal Section */}
       <section className="relative z-20 bg-ln-dark py-0 overflow-hidden">
         <BlueprintReveal 
-          baseImage="/assets/car.png"
-          revealImage="/assets/blueprint.png"
+          baseImage="/assets/car_centered.png"
+          revealImage="/assets/blueprint_matched.png"
           className="w-full"
+          revealOffset={{ x: 0, y: 0 }}
+          revealScale={1}
         />
       </section>
 
