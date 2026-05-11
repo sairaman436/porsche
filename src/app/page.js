@@ -4,6 +4,8 @@ const ParallaxFrames = dynamic(() => import('../components/ParallaxFrames'), { s
 const OrbitImages = dynamic(() => import('../components/OrbitImages'), { ssr: false });
 const FlowingMenu = dynamic(() => import('../components/FlowingMenu'), { ssr: false });
 const TextPressure = dynamic(() => import('../components/TextPressure'), { ssr: false });
+const SplitText = dynamic(() => import('../components/SplitText'), { ssr: false });
+const BlueprintReveal = dynamic(() => import('../components/BlueprintReveal'), { ssr: false });
 
 export default function Home() {
   const orbitItems = [
@@ -39,12 +41,20 @@ export default function Home() {
       <section className="relative z-20 bg-ln-bg py-32 md:py-48 px-8 md:px-16 flex items-center justify-center text-center">
         <div className="max-w-5xl">
           <p className="font-sans font-bold text-[10px] tracking-[0.4em] uppercase text-ln-muted mb-8">Porsche AG — Since 1931</p>
-          <h2 className="font-serif font-black italic text-[7vw] md:text-[4.5vw] leading-[1.1] uppercase text-ln-text">
-            <span className="text-ln-muted">Redefining</span> Performance, Pushing Every{" "}
-            <span className="text-ln-muted">Limit</span>, Crafting The Future Of{" "}
-            <span className="text-stroke-white">Driving</span> On And Off The Track<span className="text-ln-accent">.</span>
-          </h2>
+          <SplitText 
+            text="Redefining Performance, Pushing Every Limit, Crafting The Future Of Driving On And Off The Track."
+            className="font-serif font-black italic text-[7vw] md:text-[4.5vw] leading-[1.1] uppercase text-ln-text"
+          />
         </div>
+      </section>
+
+      {/* Blueprint Reveal Section */}
+      <section className="relative z-20 bg-ln-dark py-0 overflow-hidden">
+        <BlueprintReveal 
+          baseImage="/assets/car.png"
+          revealImage="/assets/blueprint.png"
+          className="w-full"
+        />
       </section>
 
       {/* Orbit */}
@@ -58,9 +68,11 @@ export default function Home() {
         <div className="max-w-screen-xl mx-auto">
           <div className="mb-12">
             <p className="font-sans font-bold text-[10px] tracking-[0.3em] uppercase text-ln-muted mb-3">Navigate</p>
-            <h2 className="font-serif font-black italic text-5xl md:text-7xl uppercase leading-none text-ln-text">
-              Explore<span className="text-ln-accent">.</span>
-            </h2>
+            <SplitText 
+              text="EXPLORE."
+              className="font-serif font-black italic text-5xl md:text-7xl uppercase leading-none text-ln-text"
+              stagger={0.1}
+            />
           </div>
           <FlowingMenu items={menuItems} />
         </div>
